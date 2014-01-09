@@ -77,6 +77,7 @@ class Launcher:
         shutil.copy('{0}/{1}.jar'.format(JAR_DIR, config.VERSION), '{0}/{1}.jar'.format(self.temp, config.VERSION))
 
         self.installOptifine()
+        self.installReisMinimap()
         self.removeMETAINF()
 
         shutil.copytree('{0}/natives'.format(BASE_DIR), '{0}/natives'.format(self.temp))
@@ -91,7 +92,7 @@ class Launcher:
         os.chdir('optifine')
 
         print('Downloading Optifine')
-        self.downloadFile(config.OPTIFINE_LINK)
+        self.downloadFile(config.OPTIFINE_LINK, 'optifine.jar')
         print('Installing Optifine into the minecraft.jar')
         subprocess.call('jar xf optifine.jar', shell=True)
         os.remove('optifine.jar')
@@ -99,6 +100,22 @@ class Launcher:
 
         os.chdir('..')
         shutil.rmtree('optifine')
+
+    def installReisMinimap(self):
+        if not os.path.exists('reis'):
+            os.makedirs('reis')
+
+        os.chdir('reis')
+
+        print('Downloading Rei\'s Minimap')
+        self.downloadFile(config.REIS_MINIMAP_LINK, 'rei.jar')
+        print('Installing Rei\'s Minimap into the minecraft.jar')
+        subprocess.call('jar xf rei.jar', shell=True)
+        os.remove('rei.jar')
+        subprocess.call('zip -rT ../{0}.jar *'.format(config.VERSION), shell=True)
+
+        os.chdir('..')
+        shutil.rmtree('reis')
 
     def removeMETAINF(self):
         print('Removing META-INF from minecraft.jar')
@@ -145,9 +162,9 @@ class Launcher:
 
         return accountdata
 
-    def downloadFile(self, url):
+    def downloadFile(self, url, filename):
         r = requests.get(url)
-        output = open('optifine.jar', 'wb')
+        output = open(filename, 'wb')
         output.write(r.content)
 
     def stop(self):
