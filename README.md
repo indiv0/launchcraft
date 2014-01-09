@@ -8,7 +8,6 @@ Prerequisites
 
 * Linux
 * zip
-* p7zip
 * python 2.7
   * virtualenv
   * setuptools
