@@ -76,8 +76,8 @@ class Launcher:
         self.natives_dir = '{0}/natives'.format(self.temp)
         shutil.copy('{0}/{1}.jar'.format(JAR_DIR, config.VERSION), '{0}/{1}.jar'.format(self.temp, config.VERSION))
 
-        self.installOptifine()
-        self.installReisMinimap()
+        self.installJar('Optifine', config.OPTIFINE_LINK)
+        self.installJar('Rei\'s Minimap', config.REIS_MINIMAP_LINK)
         self.removeMETAINF()
 
         shutil.copytree('{0}/natives'.format(BASE_DIR), '{0}/natives'.format(self.temp))
@@ -85,37 +85,24 @@ class Launcher:
 
         os.chdir(current)
 
-    def installOptifine(self):
-        if not os.path.exists('optifine'):
-            os.makedirs('optifine')
+    def installJar(self, name, url):
+        tempDir = 'jar_temp'
+        jarName = 'mod.jar'
 
-        os.chdir('optifine')
+        if not os.path.exists(tempDir):
+            os.makedirs(tempDir)
 
-        print('Downloading Optifine')
-        self.downloadFile(config.OPTIFINE_LINK, 'optifine.jar')
-        print('Installing Optifine into the minecraft.jar')
-        subprocess.call('jar xf optifine.jar', shell=True)
-        os.remove('optifine.jar')
+        os.chdir(tempDir)
+
+        print('Downloading {0}'.format(name))
+        self.downloadFile(url, jarName)
+        print('Installing {0} into the minecraft.jar'.format(name))
+        subprocess.call('jar xf {0}'.format(jarName), shell=True)
+        os.remove(jarName)
         subprocess.call('zip -rT ../{0}.jar *'.format(config.VERSION), shell=True)
 
         os.chdir('..')
-        shutil.rmtree('optifine')
-
-    def installReisMinimap(self):
-        if not os.path.exists('reis'):
-            os.makedirs('reis')
-
-        os.chdir('reis')
-
-        print('Downloading Rei\'s Minimap')
-        self.downloadFile(config.REIS_MINIMAP_LINK, 'rei.jar')
-        print('Installing Rei\'s Minimap into the minecraft.jar')
-        subprocess.call('jar xf rei.jar', shell=True)
-        os.remove('rei.jar')
-        subprocess.call('zip -rT ../{0}.jar *'.format(config.VERSION), shell=True)
-
-        os.chdir('..')
-        shutil.rmtree('reis')
+        shutil.rmtree(tempDir)
 
     def removeMETAINF(self):
         print('Removing META-INF from minecraft.jar')
