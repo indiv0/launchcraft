@@ -30,7 +30,6 @@ Running
 To-Do
 =====
 
-* Remove `p7zip` dependency
 * Make script platform-independent
 * Remove dependency on install Minecraft installation
 

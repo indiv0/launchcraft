@@ -105,9 +105,9 @@ class Launcher:
         shutil.rmtree(tempDir)
 
     def removeMETAINF(self):
-        print('Removing META-INF from minecraft.jar')
+        print('Removing META-INF from {0}.jar'.format(config.VERSION))
 
-        subprocess.call('7z d -tzip {0}.jar META-INF/'.format(config.VERSION), shell=True)
+        subprocess.call('zip -d {0}.jar META-INF/*'.format(config.VERSION), shell=True)
 
     def getExecutableString(self):
         print('Authenticating...')
