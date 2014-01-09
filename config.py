@@ -1,0 +1,8 @@
+MIN_RAM = '512M'
+MAX_RAM = '1G'
+VERSION = '1.7.2'
+JAVA = 'java'
+MINECRAFT_CLASS = 'net.minecraft.client.main.Main'
+EMAIL = 'someemail@gmail.com'
+USERNAME = 'username'
+OPTIFINE_LINK = 'http://optifine.net/download.php?f=OptiFine_1.7.2_HD_U_A9.jar'
