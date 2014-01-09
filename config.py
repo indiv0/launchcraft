@@ -1,5 +1,5 @@
-MIN_RAM = '512M'
-MAX_RAM = '1G'
+MIN_RAM = '2G'
+MAX_RAM = '3G'
 VERSION = '1.7.2'
 JAVA = 'java'
 MINECRAFT_CLASS = 'net.minecraft.client.main.Main'
