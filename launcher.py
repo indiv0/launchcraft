@@ -133,7 +133,7 @@ class Launcher:
             print('Failed!')
             return ''
 
-        executable = '{0} {1} -cp "{2}" {3} --username {4} --version {5} --gameDir {6} --assetsDir {7} --assetsIndex {5} --uuid {8} --accessToken {9} --userProperties {10} --userType mojang'.format(config.JAVA, java_args, self.classpath, config.MINECRAFT_CLASS, auth_user, config.VERSION, MINECRAFT_DIR, ASSETS_DIR, auth_uuid, auth_accessToken, '{}')
+        executable = '{0} {1} -cp "{2}" {3} --username {4} --version {5} --gameDir {6} --assetsDir {7} --uuid {8} --accessToken {9}'.format(config.JAVA, java_args, self.classpath, config.MINECRAFT_CLASS, auth_user, config.VERSION, MINECRAFT_DIR, ASSETS_DIR, auth_uuid, auth_accessToken)
 
         print(executable)
 
