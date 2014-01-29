@@ -114,14 +114,13 @@ class Launcher:
 
         java_args = '-Xms{0} -Xmx{1} -Djava.library.path={2}'.format(config.MIN_RAM, config.MAX_RAM, self.natives_dir)
 
-        password = getpass.getpass()
-
-        resp = self.auth(config.USERNAME, password)
+        resp = self.auth(config.EMAIL, getpass.getpass())
 
         try:
             cause = resp['cause']
             if cause == u'UserMigratedException':
-                resp = self.auth(config.EMAIL, password)
+                # Don't store the password in a variable to avoid it being stored in memory longer than necessary.
+                resp = self.auth(config.USERNAME, getpass.getpass())
         except:
             pass
 
