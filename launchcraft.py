@@ -108,15 +108,11 @@ except OSError as ex:
 
 try:
     print('Creating new profile directory.')
-    shutil.copytree(JAR_DIR, PROFILE_DIR)
+    os.makedirs(PROFILE_DIR)
 except OSError as ex:
-    if ex.errno == errno.ENOENT:
-        print('Base profile dir not found. Please download minecraft version {} and run it at least once.'.format(config.VERSION))
-        sys.exit(1)
-    else:
-        print(ex)
-        print('Failed to create new profile directory, exiting...')
-        sys.exit(1)
+    print(ex)
+    print('Failed to create new profile directory, exiting...')
+    sys.exit(1)
 
 PROFILE_DIR = os.path.join(VERSIONS_DIR, config.PROFILE_NAME)
 
