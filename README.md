@@ -15,7 +15,7 @@ Prerequisites
 Windows
 -------
 
-In order to be able to use `PyInstaller` on Windows (to package the script as a `.exe`), you must also get `[pywin32](http://sourceforge.net/projects/pywin32)`.
+In order to be able to use `PyInstaller` on Windows (to package the script as a `.exe`), you must also get [`pywin32`](http://sourceforge.net/projects/pywin32).
 
 Instructions
 ============
