@@ -72,12 +72,16 @@ if __name__ == '__main__':
         print('Downloading {} version {}'.format(name, version))
         util.downloadFile(forge['url'], jarName)
 
-        # Run the installer so the user can install Forge.
-        print('You will now be asked to install Forge version {}.'.format(version))
-        with open(os.devnull, 'w') as devnull:
-            subprocess.call('java -jar {}'.format(jarName), shell=True, stdout=devnull)
+        if os.name == 'nt':
+            print('You must now run the {} that has been downloaded to your Minecraft directory.')
+            sys.exit(0)
+        else:
+            # Run the installer so the user can install Forge.
+            print('You will now be asked to install Forge version {}.'.format(version))
+            with open(os.devnull, 'w') as devnull:
+                subprocess.call('java -jar {}'.format(jarName), shell=True, stdout=devnull)
 
-        os.remove(jarName)
+            os.remove(jarName)
 
     JAR_FILE = os.path.join(PROFILE_DIR, '{}.jar'.format(profile_name))
     JSON_FILE = os.path.join(PROFILE_DIR, '{}.json'.format(profile_name))
