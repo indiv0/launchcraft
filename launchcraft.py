@@ -18,6 +18,7 @@ else:
 BASE_DIR = os.getcwd()
 MINECRAFT_DIR = os.path.join(home, '.minecraft')
 VERSIONS_DIR = os.path.join(MINECRAFT_DIR, 'versions')
+MOD_DIR = os.path.join(MINECRAFT_DIR, 'mods')
 
 if __name__ == '__main__':
     version = raw_input('Which version of Minecraft would you like to use? [1.7.2]:').lower()
@@ -34,7 +35,6 @@ if __name__ == '__main__':
 
     FORGE_VERSION = '{}-Forge{}'.format(version, util.MODS['forge']['version'])
     FORGE_DIR = os.path.join(VERSIONS_DIR, FORGE_VERSION)
-    MOD_DIR = os.path.join(MINECRAFT_DIR, 'mods')
 
     print('Entering directory "{}".'.format(MINECRAFT_DIR))
     try:

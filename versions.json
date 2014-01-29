@@ -51,6 +51,21 @@
             "deps": [
                 "forge"
             ]
+        },
+        "direction_hud": {
+            "name": "Direction HUD",
+            "version": "1.18",
+            "url": "http://bspk.rs/MC/DirectionHUD/%5B1.7.2%5DDirectionHUD-client-1.18(1.7.2).jar",
+            "deps": [
+                "forge",
+                "bspkrsCore"
+            ]
+        },
+        "minecapes": {
+            "name": "MineCapes",
+            "version": "2.0",
+            "url": "http://www.minecapes.net/files/MineCapes%20Mod%20v2.0.zip",
+            "deps": []
         }
     }
 }
