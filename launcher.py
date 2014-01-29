@@ -5,153 +5,35 @@ import getpass
 import os
 import tempfile
 import shutil
+import errno
 import subprocess
+import sys
 
 from os.path import expanduser
 home = expanduser("~")
 
 BASE_DIR = os.getcwd()
-MINECRAFT_DIR = '{0}/.minecraft'.format(home)
-JAR_DIR = '{0}/versions/{1}'.format(MINECRAFT_DIR, config.VERSION)
-LIB_DIR = '{0}/libraries'.format(MINECRAFT_DIR)
-ASSETS_DIR = '{0}/assets'.format(MINECRAFT_DIR)
+MINECRAFT_DIR = os.path.join(home, '.minecraft')
+VERSIONS_DIR = os.path.join(MINECRAFT_DIR, 'versions')
+JAR_DIR = os.path.join(VERSIONS_DIR, config.VERSION)
 
+try:
+    print('Entering directory "{}"...'.format(MINECRAFT_DIR))
+    os.chdir(MINECRAFT_DIR)
 
-class Launcher:
-    classpath = ''
-    natives_dir = ''
-    temp = ''
+    try:
+        shutil.rmtree(VERSIONS_DIR + '/indiv0')
+        print('Removed old profile directory...')
+    except OSError as ex:
+        if ex.errno == errno.ENOENT:
+            print('No old profile directory found...')
+        else:
+            print(ex)
+            print('Failed to remove old profile directory, exiting...')
 
-    def __init__(self):
-        self.setupTempDir()
-        self.getDeps()
+    print('Creating new profile directory...')
+    shutil.copytree(JAR_DIR, VERSIONS_DIR + '/indiv0')
 
-    def getDeps(self):
-        json_file = open('{0}/{1}.json'.format(JAR_DIR, config.VERSION))
-        deps = json.load(json_file)
-        libraries = deps['libraries']
-
-        natives = 'natives-linux'
-
-        for lib in libraries:
-            for lib_name, library in lib.iteritems():
-                if lib_name == 'extract':
-                    continue
-                elif lib_name == 'natives':
-                    continue
-                elif lib_name == 'rules':
-                    continue
-
-                packages = library.split(':')[0]
-                name = library.split(':')[-2]
-
-                if name == 'twitch-platform':
-                    name = 'twitch'
-                elif name == 'twitch-external-platform':
-                    continue
-
-                packages = packages.replace('.', '/')
-                VERSION = library.split(':')[-1]
-                jar_name = '{0}-{1}'.format(name, VERSION)
-
-                if name == 'lwjgl-platform' or name == 'jinput-platform':
-                    jar_name = jar_name + '-{0}'.format(natives)
-
-                library = ':{0}/{1}/{2}/{3}/{4}.jar'.format(LIB_DIR, packages, name, VERSION, jar_name)
-
-                self.classpath += library
-
-    def setupTempDir(self):
-        print('Setting up temp dir')
-
-        try:
-            current = os.getcwd()
-            self.temp = tempfile.mkdtemp()
-            print("Temp dir: {0}".format(self.temp))
-            os.chdir(self.temp)
-        except:
-            print('Failed to setup temporary directory')
-            return
-
-        self.natives_dir = '{0}/natives'.format(self.temp)
-        shutil.copy('{0}/{1}.jar'.format(JAR_DIR, config.VERSION), '{0}/{1}.jar'.format(self.temp, config.VERSION))
-
-        self.installJar('Optifine', config.OPTIFINE_LINK)
-        self.installJar('Rei\'s Minimap', config.REIS_MINIMAP_LINK)
-        self.removeMETAINF()
-
-        shutil.copytree('{0}/natives'.format(BASE_DIR), '{0}/natives'.format(self.temp))
-        self.classpath = '{0}/{1}.jar'.format(self.temp, config.VERSION)
-
-        os.chdir(current)
-
-    def installJar(self, name, url):
-        tempDir = 'jar_temp'
-        jarName = 'mod.jar'
-
-        if not os.path.exists(tempDir):
-            os.makedirs(tempDir)
-
-        os.chdir(tempDir)
-
-        print('Downloading {0}'.format(name))
-        self.downloadFile(url, jarName)
-        print('Installing {0} into the minecraft.jar'.format(name))
-        subprocess.call('jar xf {0}'.format(jarName), shell=True)
-        os.remove(jarName)
-        subprocess.call('zip -rT ../{0}.jar *'.format(config.VERSION), shell=True)
-
-        os.chdir('..')
-        shutil.rmtree(tempDir)
-
-    def removeMETAINF(self):
-        print('Removing META-INF from {0}.jar'.format(config.VERSION))
-
-        subprocess.call('zip -d {0}.jar META-INF/*'.format(config.VERSION), shell=True)
-
-    def getExecutableString(self):
-        print('Authenticating...')
-
-        java_args = '-Xms{0} -Xmx{1} -Djava.library.path={2}'.format(config.MIN_RAM, config.MAX_RAM, self.natives_dir)
-
-        resp = self.auth(config.EMAIL, getpass.getpass())
-
-        try:
-            cause = resp['cause']
-            if cause == u'UserMigratedException':
-                # Don't store the password in a variable to avoid it being stored in memory longer than necessary.
-                resp = self.auth(config.USERNAME, getpass.getpass())
-        except:
-            pass
-
-        try:
-            auth_user = resp['selectedProfile']['name']
-            auth_accessToken = resp['accessToken']
-            auth_uuid = resp['selectedProfile']['id']
-        except KeyError:
-            print('Failed!')
-            return ''
-
-        executable = '{0} {1} -cp "{2}" {3} --username {4} --version {5} --gameDir {6} --assetsDir {7} --uuid {8} --accessToken {9}'.format(config.JAVA, java_args, self.classpath, config.MINECRAFT_CLASS, auth_user, config.VERSION, MINECRAFT_DIR, ASSETS_DIR, auth_uuid, auth_accessToken)
-
-        print(executable)
-
-        return executable
-
-    def auth(self, username, password):
-        url = 'https://authserver.mojang.com/authenticate'
-        payload = {'agent': {'name': 'Minecraft', 'version': 1}, 'username': username, 'password': password}
-        headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
-
-        r = requests.post(url, data=json.dumps(payload), headers=headers)
-        accountdata = json.loads(r.text)
-
-        return accountdata
-
-    def downloadFile(self, url, filename):
-        r = requests.get(url)
-        output = open(filename, 'wb')
-        output.write(r.content)
-
-    def stop(self):
-        shutil.rmtree(self.temp)
+    PROFILE_DIR = os.path.join(MINECRAFT_DIR, 'indiv0')
+except ValueError:
+    pass

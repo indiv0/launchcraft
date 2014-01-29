@@ -3,7 +3,7 @@ PC=python2.7
 all: minecraft
 
 minecraft: venv
-	. venv/bin/activate; $(PC) minecraft.py
+	. venv/bin/activate; $(PC) launcher.py
 
 venv: venv/bin/activate
 
