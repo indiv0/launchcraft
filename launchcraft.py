@@ -57,9 +57,9 @@ def installJar(mod, jar):
     with open(os.devnull, 'w') as devnull, RedirectStdStreams(stdout=devnull, stderr=devnull), zipfile.ZipFile(jarName, 'r') as zin, zipfile.ZipFile(jar, 'a') as zout:
         for n in zin.namelist():
             zout.writestr(n, zin.open(n).read())
-    os.remove(jarName)
 
     os.chdir('..')
+    shutil.rmtree(tempDir)
 
 
 def removeMETAINF(jar):
