@@ -6,15 +6,8 @@ import zipfile
 import requests
 
 import launchcraft
-import json
 
-
-#DATA = requests.get('http://nikitapek.in/static/versions.json').json()
-DATA = []
-with open('versions.json') as f:
-    for line in f:
-        print(line)
-        DATA.append(json.loads(line))
+DATA = requests.get('http://nikitapek.in/static/versions.json').json()
 INSTALLED_MODS = []
 MODS = []
 
