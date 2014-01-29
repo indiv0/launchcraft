@@ -1,11 +1,15 @@
 # -*- mode: python -*-
+VERSION = '1.0.1'
+NAME = 'launchcraft-{}'.format(VERSION)
+
+if os.name == 'nt':
+  NAME += '.exe'
+
 a = Analysis(['launchcraft.py'],
              pathex=['/mnt/storage/code/python/launchcraft'],
              hiddenimports=[],
              hookspath=None,
              runtime_hooks=None)
-
-import os
 
 # Fix certifi dependency.
 # The certifi directory will be different on Linux and Windows.
@@ -23,7 +27,7 @@ exe = EXE(pyz,
           a.binaries,
           a.zipfiles,
           a.datas,
-          name='launchcraft',
+          name=NAME,
           debug=False,
           strip=None,
           upx=True,
