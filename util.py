@@ -5,11 +5,12 @@ import shutil
 import zipfile
 import requests
 
-import config
 import launchcraft
 
 
+DATA = requests.get('http://nikitapek.in/static/versions.json').json()
 INSTALLED_MODS = []
+MODS = []
 
 
 class RedirectStdStreams(object):
@@ -89,7 +90,7 @@ def installDep(key, jar, query=True):
     if key in INSTALLED_MODS:
         return
 
-    mod = config.MODS[key]
+    mod = MODS[key]
     name = mod['name']
 
     # If it is not a dependency and the user does not want the mod, do not install it.
@@ -115,7 +116,7 @@ def installDep(key, jar, query=True):
 
 
 def installJar(key, jar, query=True):
-    mod = config.MODS[key]
+    mod = MODS[key]
     name = mod['name']
 
     tempDir = 'jar_temp'
@@ -140,7 +141,7 @@ def installJar(key, jar, query=True):
 
 
 def installForgeMod(key, jar, query=True):
-    mod = config.MODS[key]
+    mod = MODS[key]
     name = mod['name']
     version = mod['version']
 
