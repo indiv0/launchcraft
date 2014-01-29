@@ -1,9 +1,12 @@
 PC=python2.7
 
-all: minecraft
+all: build
 
-minecraft: venv
-	. venv/bin/activate; $(PC) minecraft.py
+build: venv
+	. venv/bin/activate; pyinstaller launchcraft.spec
+
+run: venv
+	. venv/bin/activate; $(PC) launchcraft.py
 
 venv: venv/bin/activate
 
@@ -13,7 +16,14 @@ venv/bin/activate:
 	. venv/bin/activate; pip install -Ur requirements
 	# Update file modification and access times.
 	touch venv/bin/activate
+	cp venv/lib/python2.7/site-packages/certifi/cacert.pem cacert.pem
+
+fullclean: clean
+	rm -rf venv/
+	rm -rf cacert.pem
 
 clean:
-	rm -rf venv/
 	rm -rf logs/
+	rm -rf build/
+	rm -rf dist/
+	rm -rf *.pyc

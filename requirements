@@ -1,2 +1,5 @@
-requests==2.1.0
+PyInstaller==2.1
+certifi==1.0.0
+distribute==0.7.3
+requests==2.2.1
 wsgiref==0.1.2
