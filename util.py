@@ -81,8 +81,8 @@ def downloadFile(url, filename):
 
 
 def installDep(key, jar, query=True):
-    # FML is not installed via the normal dependency method.
-    if key is 'fml':
+    # Forge is not installed via the normal dependency method.
+    if key is 'forge':
         return
 
     # If the mod is already installed, no need to install it again.
@@ -96,19 +96,19 @@ def installDep(key, jar, query=True):
     if query and not query_yes_no("Install {}?".format(name)):
         return
 
-    depends_on_fml = False
+    depends_on_forge = False
 
     print('Installing {} dependencies.'.format(name))
     for dep in mod['deps']:
-        if dep is 'fml':
-            depends_on_fml = True
+        if dep is 'forge':
+            depends_on_forge = True
         installDep(dep, jar, False)
 
-        # If the requested mod depends on FML and FML is not installed, the installation fails.
+        # If the requested mod depends on Forge and Forge is not installed, the installation fails.
         if dep not in INSTALLED_MODS:
             raise DependencyException()
 
-    if depends_on_fml:
+    if depends_on_forge:
         installForgeMod(key, jar, query)
     else:
         installJar(key, jar, query)

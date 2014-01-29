@@ -17,24 +17,24 @@ MODS = {
         'name': 'Status Effect HUD',
         'version': '1.21',
         'url': 'http://dl.dropboxusercontent.com/u/20748481/MC/StatusEffectHUD/latest/%5B1.7.2%5DStatusEffectHUD-client-1.21(1.7.2).jar',
-        'deps': {'fml', 'bspkrsCore'}
+        'deps': {'forge', 'bspkrsCore'}
     },
     'armor_status_hud': {
         'name': 'Armor Status HUD',
         'version': '1.18',
         'url': 'http://dl.dropboxusercontent.com/u/20748481/MC/ArmorStatusHUD/latest/%5B1.7.2%5DArmorStatusHUD-client-1.18(1.7.2).jar',
-        'deps': {'fml', 'bspkrsCore'}
+        'deps': {'forge', 'bspkrsCore'}
     },
     'bspkrsCore': {
         'name': 'bspkrsCore',
         'version': '6.0',
-        'url': 'http://dl.dropboxusercontent.com/u/20748481/MC/bspkrsCore/latest/%5B1.7.2%5DbspkrsCore-universal-6.0%281.7.2%29.jar',
-        'deps': {'fml'}
+        'url': 'http://bspk.rs/MC/bspkrsCore/%5B1.7.2%5DbspkrsCore-universal-6.0(1.7.2).jar',
+        'deps': {'forge'}
     },
-    'fml': {
-        'name': 'FML',
-        'version': '7.2.107.862',
-        'url': 'http://files.minecraftforge.net/maven/cpw/mods/fml/1.7.2-7.2.107.862/fml-1.7.2-7.2.107.862-installer.jar',
+    'forge': {
+        'name': 'Forge',
+        'version': '10.12.0.1021',
+        'url': 'http://files.minecraftforge.net/maven/net/minecraftforge/forge/1.7.2-10.12.0.1021/forge-1.7.2-10.12.0.1021-installer.jar',
         'deps': {}
     }
 }

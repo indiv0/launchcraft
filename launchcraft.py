@@ -20,8 +20,9 @@ BASE_DIR = os.getcwd()
 MINECRAFT_DIR = os.path.join(home, '.minecraft')
 VERSIONS_DIR = os.path.join(MINECRAFT_DIR, 'versions')
 JAR_DIR = os.path.join(VERSIONS_DIR, config.VERSION)
-FML_VERSION = '{}-FML{}'.format(config.VERSION, config.MODS['fml']['version'])
-FML_DIR = os.path.join(VERSIONS_DIR, FML_VERSION)
+
+FORGE_VERSION = '{}-Forge{}'.format(config.VERSION, config.MODS['forge']['version'])
+FORGE_DIR = os.path.join(VERSIONS_DIR, FORGE_VERSION)
 MOD_DIR = os.path.join(MINECRAFT_DIR, 'mods')
 
 if __name__ == '__main__':
@@ -50,19 +51,19 @@ if __name__ == '__main__':
             print('Failed to remove old profile directory, exiting...')
             sys.exit(1)
 
-    # Ask the user whether or not they need FML.
-    if util.query_yes_no('Do you need to (re)install Forge/FML?', default='no'):
-        fml = config.MODS['fml']
-        name = fml['name']
-        version = fml['version']
-        jarName = 'fml.jar'
+    # Ask the user whether or not they need Forge.
+    if util.query_yes_no('Do you need to (re)install Forge?', default='no'):
+        forge = config.MODS['forge']
+        name = forge['name']
+        version = forge['version']
+        jarName = 'forge.jar'
 
-        # Download the FML installer.
+        # Download the Forge installer.
         print('Downloading {} version {}'.format(name, version))
-        util.downloadFile(fml['url'], jarName)
+        util.downloadFile(forge['url'], jarName)
 
-        # Run the installer so the user can install FML.
-        print('You will now be asked to install FML version {}.'.format(version))
+        # Run the installer so the user can install Forge.
+        print('You will now be asked to install Forge version {}.'.format(version))
         with open(os.devnull, 'w') as devnull:
             subprocess.call('java -jar {}'.format(jarName), shell=True, stdout=devnull)
 
@@ -71,18 +72,16 @@ if __name__ == '__main__':
     JAR_FILE = os.path.join(PROFILE_DIR, '{}.jar'.format(profile_name))
     JSON_FILE = os.path.join(PROFILE_DIR, '{}.json'.format(profile_name))
 
-    print(FML_DIR)
-    print(os.path.exists(FML_DIR))
-    # If the FML directory exists, then we consider FML to be installed, and we use FML.
-    if os.path.exists(FML_DIR) and util.query_yes_no('FML has been found on your system. Would you like to use it?', default='no'):
+    # If the Forge directory exists, then we consider Forge to be installed, and we use Forge.
+    if os.path.exists(FORGE_DIR) and util.query_yes_no('Forge has been found on your system. Would you like to use it?', default='no'):
         if not os.path.exists(MOD_DIR):
             os.makedirs(MOD_DIR)
 
-        util.INSTALLED_MODS.append('fml')
-        JAR_DIR = FML_DIR
-        shutil.copytree(FML_DIR, PROFILE_DIR)
-        shutil.move(os.path.join(PROFILE_DIR, '{}.jar'.format(FML_VERSION)), JAR_FILE)
-        SOURCE_JSON_FILE = '{}.json'.format(FML_VERSION)
+        util.INSTALLED_MODS.append('forge')
+        JAR_DIR = FORGE_DIR
+        shutil.copytree(FORGE_DIR, PROFILE_DIR)
+        shutil.move(os.path.join(PROFILE_DIR, '{}.jar'.format(FORGE_VERSION)), JAR_FILE)
+        SOURCE_JSON_FILE = '{}.json'.format(FORGE_VERSION)
 
         print('Entering newly created profile directory.')
         os.chdir(PROFILE_DIR)
@@ -116,14 +115,13 @@ if __name__ == '__main__':
 
     print('Installing mods.')
     for mod in config.MODS:
-        # Do not install forge-dependant mods if FML is not installed.
-        if 'fml' in config.MODS[mod]['deps'] and 'fml' not in util.INSTALLED_MODS:
+        # Do not install forge-dependant mods if Forge is not installed.
+        if 'forge' in config.MODS[mod]['deps'] and 'forge' not in util.INSTALLED_MODS:
             continue
 
         util.installDep(mod, JAR_FILE)
 
-    if 'fml' not in util.INSTALLED_MODS:
-        util.removeMETAINF(JAR_FILE)
+    util.removeMETAINF(JAR_FILE)
 
     print('Completed successfully!')
     try:
