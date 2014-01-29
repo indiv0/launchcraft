@@ -3,20 +3,6 @@ launchcraft
 
 A python script to automate the installation of my preferred minecraft setup.
 
-Prerequisites
-=============
-
-* pyinstaller
-  * upx
-* python 2.7
-  * virtualenv
-  * setuptools
-
-Windows
--------
-
-In order to be able to use `PyInstaller` on Windows (to package the script as a `.exe`), you must also get [`pywin32`](http://sourceforge.net/projects/pywin32).
-
 Instructions
 ============
 
