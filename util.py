@@ -30,10 +30,6 @@ class RedirectStdStreams(object):
         sys.stderr = self.old_stderr
 
 
-class DependencyException(Exception):
-    print('Unable to install required dependency.')
-
-
 # Fix certifi dependency.
 # Stolen and adpated from <http://stackoverflow.com/questions/7674790/bundling-data-files-with-pyinstaller-onefile>
 def resource_path(relative):
@@ -106,7 +102,8 @@ def installDep(key, jar, query=True):
 
         # If the requested mod depends on Forge and Forge is not installed, the installation fails.
         if dep not in INSTALLED_MODS:
-            raise DependencyException()
+            print('Unable to install required dependency "{}"'.format(dep))
+            sys.exit(1)
 
     if depends_on_forge:
         installForgeMod(key, jar, query)
