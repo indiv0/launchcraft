@@ -66,6 +66,14 @@
             "version": "2.0",
             "url": "http://www.minecapes.net/files/MineCapes%20Mod%20v2.0.zip",
             "deps": []
+        },
+        "dynamic_lights": {
+            "name": "DynamicLights",
+            "version": "1.7.2",
+            "url": "https://raw.github.com/AtomicStryker/github.io/master/files/DynamicLights_1.7.2.zip",
+            "deps": [
+                "forge"
+            ]
         }
     }
 }
