@@ -4,8 +4,26 @@ import requests
 import os
 import shutil
 import errno
-import subprocess
 import sys
+import zipfile
+
+
+class RedirectStdStreams(object):
+    def __init__(self, stdout=None, stderr=None):
+        self._stdout = stdout or sys.stdout
+        self._stderr = stderr or sys.stderr
+
+    def __enter__(self):
+        self.old_stdout, self.old_stderr = sys.stdout, sys.stderr
+        self.old_stdout.flush()
+        self.old_stderr.flush()
+        sys.stdout, sys.stderr = self._stdout, self._stderr
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self._stdout.flush()
+        self._stderr.flush()
+        sys.stdout = self.old_stdout
+        sys.stderr = self.old_stderr
 
 
 # Fix certifi dependency.
@@ -36,18 +54,30 @@ def installJar(mod, jar):
     print('Downloading {} version {}'.format(name, mod['version']))
     downloadFile(mod['url'], jarName)
     print('Installing {} into the minecraft.jar'.format(name))
-    with open(os.devnull, 'w') as devnull:
-        subprocess.call('jar xf {}'.format(jarName), shell=True, stdout=devnull)
-        os.remove(jarName)
-        subprocess.call('zip -rT {} *'.format(jar), shell=True, stdout=devnull)
+    with open(os.devnull, 'w') as devnull, RedirectStdStreams(stdout=devnull, stderr=devnull), zipfile.ZipFile(jarName, 'r') as zin, zipfile.ZipFile(jar, 'a') as zout:
+        for n in zin.namelist():
+            zout.writestr(n, zin.open(n).read())
+    os.remove(jarName)
 
     os.chdir('..')
 
 
 def removeMETAINF(jar):
     print('Removing META-INF from {}'.format(jar))
-    with open(os.devnull, 'w') as devnull:
-        subprocess.call('zip -d {} META-INF/*'.format(jar), shell=True, stdout=devnull)
+
+    new_jar = jar + 'new'
+
+    with open(os.devnull, 'w') as devnull, RedirectStdStreams(stdout=devnull, stderr=devnull), zipfile.ZipFile(jar, 'r') as zin, zipfile.ZipFile(new_jar, 'w') as zout:
+        for item in zin.infolist():
+            buffer = zin.read(item.filename)
+            if (item.filename[:8] != 'META-INF'):
+                zout.writestr(item, buffer)
+    #with zipfile.ZipFile(jar, 'w') as zfile:
+    #    zfile.remove('META-INF/')
+    #with open(os.devnull, 'w') as devnull:
+    #    subprocess.call('zip -d {} META-INF/*'.format(jar), shell=True, stdout=devnull)
+    os.remove(jar)
+    os.rename(new_jar, jar)
 
 from os.path import expanduser
 home = expanduser("~")
@@ -110,7 +140,7 @@ data['id'] = config.PROFILE_NAME
 with open('{}.json'.format(config.PROFILE_NAME), "w") as file:
     json.dump(data, file, indent=4)
 
-print('Deleting "{}.json"...'.format(config.VERSION))
+print('Deleting "{}.json".'.format(config.VERSION))
 os.remove('{}.json'.format(config.VERSION))
 
 print('Installing mods.')
