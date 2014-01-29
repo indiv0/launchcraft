@@ -15,9 +15,29 @@ Prerequisites
 Setup
 =====
 
-Install the depenencies for this script with:
+Linux
+-----
+
+Setup the development environment:
 
     make venv
+
+Windows
+-------
+
+Install the dependencies for this script:
+
+    pip install -r requirements
+
+Create a virtualenv:
+
+    virtualenv --python=python.exe venv
+
+Activate the virtualenv:
+
+    venv\Scripts\activate.bat
+
+Copy `cacert.pem` from `venv\Lib\python2.7\site-packages\certifi\cacert.pem` to the application's root directory.
 
 Package
 =======

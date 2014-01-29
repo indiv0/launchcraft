@@ -1,6 +1,6 @@
 # -*- mode: python -*-
 a = Analysis(['launchcraft.py'],
-             pathex=['/mnt/storage/code/python/launchcraft', '/mnt/storage/code/python/launchcraft/lib/site-packages'],
+             pathex=['/mnt/storage/code/python/launchcraft'],
              hiddenimports=[],
              hookspath=None,
              runtime_hooks=None)

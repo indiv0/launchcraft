@@ -72,15 +72,14 @@ def removeMETAINF(jar):
             buffer = zin.read(item.filename)
             if (item.filename[:8] != 'META-INF'):
                 zout.writestr(item, buffer)
-    #with zipfile.ZipFile(jar, 'w') as zfile:
-    #    zfile.remove('META-INF/')
-    #with open(os.devnull, 'w') as devnull:
-    #    subprocess.call('zip -d {} META-INF/*'.format(jar), shell=True, stdout=devnull)
     os.remove(jar)
     os.rename(new_jar, jar)
 
-from os.path import expanduser
-home = expanduser("~")
+# The home directory will be different on Linux and Windows.
+if os.getenv('APPDATA') is not None:
+    home = os.getenv('APPDATA')
+else:
+    home = os.path.expanduser("~")
 
 BASE_DIR = os.getcwd()
 MINECRAFT_DIR = os.path.join(home, '.minecraft')
