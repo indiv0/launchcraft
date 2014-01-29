@@ -3,7 +3,7 @@ PC=python2.7
 all: build
 
 build: venv
-	. venv/bin/activate; pyinstaller -F launchcraft.py
+	. venv/bin/activate; pyinstaller -F launchcraft.spec
 
 run: venv
 	. venv/bin/activate; $(PC) launchcraft.py
@@ -17,8 +17,10 @@ venv/bin/activate:
 	# Update file modification and access times.
 	touch venv/bin/activate
 
-clean:
+fullclean: clean
 	rm -rf venv/
+
+clean:
 	rm -rf logs/
 	rm -rf build/
 	rm -rf dist/
