@@ -68,12 +68,15 @@ if __name__ == '__main__':
         version = forge['version']
         jarName = 'forge.jar'
 
+        if os.name == 'nt':
+            os.chdir(BASE_DIR)
+
         # Download the Forge installer.
         print('Downloading {} version {}'.format(name, version))
         util.downloadFile(forge['url'], jarName)
 
         if os.name == 'nt':
-            print('You must now run the {} that has been downloaded to your Minecraft directory.')
+            print('You must now run the {} that has been downloaded to your Minecraft directory.'.format(jarName))
             sys.exit(0)
         else:
             # Run the installer so the user can install Forge.
