@@ -5,8 +5,17 @@ a = Analysis(['launchcraft.py'],
              hookspath=None,
              runtime_hooks=None)
 
+import os
+
 # Fix certifi dependency.
-a.datas.append(('cacert.pem', 'venv/lib/python2.7/site-packages/certifi/cacert.pem', 'DATA'))
+# The certifi directory will be different on Linux and Windows.
+cert_path = 'venv'
+if os.getenv('APPDATA') is None:
+  cert_path = os.path.join(cert_path, 'lib')
+else:
+  cert_path = os.path.join(cert_path, 'Lib')
+cert_path = os.path.join(cert_path, 'python2.7', 'site-packages', 'certifi', 'cacert.pem')
+a.datas.append(('cacert.pem', cert_path, 'DATA'))
 
 pyz = PYZ(a.pure)
 exe = EXE(pyz,

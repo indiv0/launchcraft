@@ -12,6 +12,11 @@ Prerequisites
   * virtualenv
   * setuptools
 
+Windows
+-------
+
+In order to be able to use `PyInstaller` on Windows (to package the script as a `.exe`), you must also get `[pywin32](http://sourceforge.net/projects/pywin32)`.
+
 Setup
 =====
 
@@ -39,11 +44,16 @@ Activate the virtualenv:
 
 Copy `cacert.pem` from `venv\Lib\python2.7\site-packages\certifi\cacert.pem` to the application's root directory.
 
+
 Package
 =======
 
 Windows
 -------
+
+Execute `pyinstaller` to package the script:
+
+    pyinstaller launchcraft.spec
 
 Linux
 -----
@@ -64,7 +74,7 @@ Ensure you have installed the Minecraft launcher.
 Windows
 -------
 
-Run the packaged/supplied `launchcraft.exe` executable.
+Run the packaged/supplied Launchcraft executable.
 
 Linux
 -----

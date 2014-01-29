@@ -3,7 +3,7 @@ PC=python2.7
 all: build
 
 build: venv
-	. venv/bin/activate; pyinstaller -F launchcraft.spec
+	. venv/bin/activate; pyinstaller launchcraft.spec
 
 run: venv
 	. venv/bin/activate; $(PC) launchcraft.py
