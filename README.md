@@ -13,25 +13,64 @@ Prerequisites
   * virtualenv
   * setuptools
 
-Installation
-============
+Setup
+=====
 
-Ensure you have run minecraft at least once and installed version `1.7.2`.
+Install the depenencies for this script with:
 
     make venv
 
-Then update `config.py` if required.
-
-Running
+Package
 =======
 
-Use the following command to create the Minecraft profile:
+Windows
+-------
+
+Linux
+-----
+
+Ensure the working directory is clean:
+
+    make clean
+
+Package the app with `pyinstaller`:
 
     make
 
+Install
+=======
+
+Ensure you have installed the Minecraft launcher.
+
+Windows
+-------
+
+Run the packaged/supplied `launchcraft.exe` executable.
+
+Linux
+-----
+
+### Script:
+
+Update `config.py` as needed.
+
+Use the following command to create the Minecraft profile:
+
+    make run
+
+### Executable:
+
+Run the packaged/supplied `launchcraft` executable.
+
+Play
+====
+
 Launch minecraft.
+
 Select your minecraft profile, enter `Edit Profile`.
+
 Change `Use Version:` to `release indiv0`.
+
 Save the profile.
 
 Enjoy the game!

@@ -11,8 +11,7 @@ import sys
 # Fix certifi dependency.
 # Stolen and adpated from <http://stackoverflow.com/questions/7674790/bundling-data-files-with-pyinstaller-onefile>
 def resource_path(relative):
-    return os.path.join(getattr(sys, '_MEIPASS', os.path.abspath(".")),
-                        relative)
+    return os.path.join(getattr(sys, '_MEIPASS', os.path.abspath(".")), relative)
 
 cert_path = resource_path('cacert.pem')
 
