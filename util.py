@@ -6,6 +6,10 @@ import zipfile
 import requests
 
 import config
+import launchcraft
+
+
+INSTALLED_MODS = []
 
 
 class RedirectStdStreams(object):
@@ -24,6 +28,10 @@ class RedirectStdStreams(object):
         self._stderr.flush()
         sys.stdout = self.old_stdout
         sys.stderr = self.old_stderr
+
+
+class DependencyException(Exception):
+    print('Unable to install required dependency.')
 
 
 # Fix certifi dependency.
@@ -72,46 +80,43 @@ def downloadFile(url, filename):
     output.write(r.content)
 
 
-def installForge():
-    if not query_yes_no('Do you need Forge?', default='no'):
+def installDep(key, jar, query=True):
+    # FML is not installed via the normal dependency method.
+    if key is 'fml':
         return
 
-    forge = config.MODS['forge']
-    name = forge['name']
+    # If the mod is already installed, no need to install it again.
+    if key in INSTALLED_MODS:
+        return
 
-    #if not query_yes_no("Install {}?".format(name)):
-    #    return
-
-    #tempDir = 'jar_temp'
-    jarName = 'forge.jar'
-
-    #if not os.path.exists(tempDir):
-    #    os.makedirs(tempDir)
-
-    #os.chdir(tempDir)
-
-    print('Downloading {} version {}'.format(name, forge['version']))
-    downloadFile(forge['url'], jarName)
-
-    print('You will now be asked to install the Forge client.')
-
-    #print('Downloading {} version {}'.format(name, mod['version']))
-    #downloadFile(mod['url'], jarName)
-    #print('Installing {} into the minecraft.jar'.format(name))
-    #with open(os.devnull, 'w') as devnull, RedirectStdStreams(stdout=devnull, stderr=devnull), zipfile.ZipFile(jarName, 'r') as zin, zipfile.ZipFile(jar, 'a') as zout:
-    #    for n in zin.namelist():
-    #        zout.writestr(n, zin.open(n).read())
-
-    #os.chdir('..')
-    #shutil.rmtree(tempDir)
-
-
-def installJar(mod, jar):
+    mod = config.MODS[key]
     name = mod['name']
 
-    if not query_yes_no("Install {}?".format(name)):
+    # If it is not a dependency and the user does not want the mod, do not install it.
+    if query and not query_yes_no("Install {}?".format(name)):
         return
 
+    depends_on_fml = False
+
+    print('Installing {} dependencies.'.format(name))
+    for dep in mod['deps']:
+        if dep is 'fml':
+            depends_on_fml = True
+        installDep(dep, jar, False)
+
+        # If the requested mod depends on FML and FML is not installed, the installation fails.
+        if dep not in INSTALLED_MODS:
+            raise DependencyException()
+
+    if depends_on_fml:
+        installForgeMod(key, jar, query)
+    else:
+        installJar(key, jar, query)
+
+
+def installJar(key, jar, query=True):
+    mod = config.MODS[key]
+    name = mod['name']
 
     tempDir = 'jar_temp'
     jarName = 'mod.jar'
@@ -130,6 +135,25 @@ def installJar(mod, jar):
 
     os.chdir('..')
     shutil.rmtree(tempDir)
+
+    INSTALLED_MODS.append(key)
+
+
+def installForgeMod(key, jar, query=True):
+    mod = config.MODS[key]
+    name = mod['name']
+    version = mod['version']
+
+    current = os.getcwd()
+
+    os.chdir(launchcraft.MOD_DIR)
+
+    print('Downloading {} version {}'.format(name, version))
+    downloadFile(mod['url'], '{}-{}.zip'.format(key, version))
+
+    os.chdir(current)
+
+    INSTALLED_MODS.append(key)
 
 
 def removeMETAINF(jar):

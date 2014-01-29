@@ -24,6 +24,13 @@ Windows [compilation](https://github.com/Indiv0/launchcraft/wiki/Windows----Comp
 
 Linux [instructions](https://github.com/Indiv0/launchcraft/wiki/Linux) are also available on the wiki.
 
+Forge
+-----
+
+If you choose to use Forge/FML you **MUST** add the following to `JVM Arguments` in your profile after running the script:
+
+    -Dfml.ignoreInvalidMinecraftCertificates=true -Dfml.ignorePatchDiscrepancies=true
+
 To-Do
 =====
 
