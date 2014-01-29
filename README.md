@@ -6,8 +6,9 @@ A python script to automate the installation of my preferred minecraft setup.
 Prerequisites
 =============
 
-* Linux
 * zip
+* pyinstaller
+  * upx
 * python 2.7
   * virtualenv
   * setuptools
@@ -28,7 +29,12 @@ Use the following command to create the Minecraft profile:
 
     make
 
-Launch minecraft, then select the profile `indiv0`.
+Launch minecraft.
+Select your minecraft profile, enter `Edit Profile`.
+Change `Use Version:` to `release indiv0`.
+Save the profile.
+
+Enjoy the game!
 
 To-Do
 =====

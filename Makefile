@@ -1,9 +1,12 @@
 PC=python2.7
 
-all: minecraft
+all: build
 
-minecraft: venv
-	. venv/bin/activate; $(PC) launcher.py
+build: venv
+	. venv/bin/activate; pyinstaller -F launchcraft.py
+
+run: venv
+	. venv/bin/activate; $(PC) launchcraft.py
 
 venv: venv/bin/activate
 
@@ -17,3 +20,6 @@ venv/bin/activate:
 clean:
 	rm -rf venv/
 	rm -rf logs/
+	rm -rf build/
+	rm -rf dist/
+	rm -rf *.pyc
