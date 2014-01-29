@@ -11,10 +11,10 @@ import os
 # The certifi directory will be different on Linux and Windows.
 cert_path = 'venv'
 if os.getenv('APPDATA') is None:
-  cert_path = os.path.join(cert_path, 'lib')
+  cert_path = os.path.join(cert_path, 'lib', 'python2.7')
 else:
   cert_path = os.path.join(cert_path, 'Lib')
-cert_path = os.path.join(cert_path, 'python2.7', 'site-packages', 'certifi', 'cacert.pem')
+cert_path = os.path.join(cert_path, 'site-packages', 'certifi', 'cacert.pem')
 a.datas.append(('cacert.pem', cert_path, 'DATA'))
 
 pyz = PYZ(a.pure)
