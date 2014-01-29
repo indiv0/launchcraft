@@ -76,7 +76,7 @@ if __name__ == '__main__':
         util.downloadFile(forge['url'], jarName)
 
         if os.name == 'nt':
-            print('You must now run the {} that has been downloaded to your Minecraft directory.'.format(jarName))
+            print('You must now run the {} that has been downloaded to your Launchcraft directory.'.format(jarName))
             sys.exit(0)
         else:
             # Run the installer so the user can install Forge.
