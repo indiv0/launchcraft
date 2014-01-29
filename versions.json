@@ -43,6 +43,14 @@
             "version": "10.12.0.1021",
             "url": "http://files.minecraftforge.net/maven/net/minecraftforge/forge/1.7.2-10.12.0.1021/forge-1.7.2-10.12.0.1021-installer.jar",
             "deps": []
+        },
+        "seus_shaders": {
+            "name": "Seus' Shaders",
+            "version": "v2.3.3-beta-mc1.7.2-f1019",
+            "url": "https://dl.dropboxusercontent.com/s/0pjd55o4e6vf3cp/ShadersModCore-v2.3.3-beta-mc1.7.2-f1019.jar",
+            "deps": [
+                "forge"
+            ]
         }
     }
 }
