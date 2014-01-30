@@ -1,5 +1,5 @@
 # -*- mode: python -*-
-VERSION = '1.0.3'
+VERSION = '1.0.4'
 NAME = 'launchcraft-{}'.format(VERSION)
 
 if os.name == 'nt':
