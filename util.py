@@ -140,13 +140,14 @@ def installForgeMod(key, jar, query=True):
     mod = MODS[key]
     name = mod['name']
     version = mod['version']
+    url = mod['url']
 
     current = os.getcwd()
 
     os.chdir(launchcraft.MOD_DIR)
 
     print('Downloading {} version {}'.format(name, version))
-    downloadFile(mod['url'], '{}-{}.zip'.format(key, version))
+    downloadFile(url, '{}-{}.{}'.format(key, version, url[-3:]))
 
     os.chdir(current)
 
@@ -169,6 +170,10 @@ def removeMETAINF(jar):
 
 def exit():
     try:
-        input("Press any key to exit...")
+        input('Press any key to exit...')
     except:
         pass
+
+
+def print_separator():
+    print('#########################################')

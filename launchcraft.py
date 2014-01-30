@@ -22,6 +22,7 @@ MOD_DIR = os.path.join(MINECRAFT_DIR, 'mods')
 if __name__ == '__main__':
     print('This script will ask you yes or no questions.')
     print('Any answers in square brackets (e.g. [1.7.2]), or that are capitalized (e.g. [Y/n]) are the default answers, and will be selected when you press enter.')
+    util.print_separator()
 
     version = raw_input('Which version of Minecraft would you like to use? [1.7.2]:').lower()
     if version == '':
@@ -44,12 +45,14 @@ if __name__ == '__main__':
     except:
         print('Failed to enter minecraft directory, please install minecraft first.')
         util.exit()
+    util.print_separator()
 
     # Set the directory to which the custom profile will be installed.
     profile_name = raw_input('What would you like to call the profile being created? [indiv0]: ').lower()
     if profile_name == '':
         profile_name = 'indiv0'
     PROFILE_DIR = os.path.join(VERSIONS_DIR, profile_name)
+    print('Creating profile {}'.format(profile_name))
 
     # Delete the old profile directory so we can start from scratch.
     try:
@@ -62,49 +65,62 @@ if __name__ == '__main__':
             print(ex)
             print('Failed to remove old profile directory, exiting...')
             util.exit()
+    util.print_separator()
 
-    # Ask the user whether or not they need Forge.
-    if util.query_yes_no('Do you need to (re)install Forge?', default='no'):
-        forge = util.MODS['forge']
-        name = forge['name']
-        version = forge['version']
-        jarName = 'forge.jar'
-
-        if os.name == 'nt':
-            os.chdir(BASE_DIR)
-
-        # Download the Forge installer.
-        print('Downloading {} version {}'.format(name, version))
-        util.downloadFile(forge['url'], jarName)
-
-        if os.name == 'nt':
-            print('You must now run the {} that has been downloaded to your Launchcraft directory.'.format(jarName))
-            util.exit()
+    forge = util.query_yes_no('Would you like to use Forge?', default='no')
+    if forge:
+        if os.path.exists(FORGE_DIR):
+            print('The required Forge version has been detected on your system.')
+            message = 'reinstall'
         else:
-            # Run the installer so the user can install Forge.
-            print('You will now be asked to install Forge version {}.'.format(version))
-            with open(os.devnull, 'w') as devnull:
-                subprocess.call('java -jar {}'.format(jarName), shell=True, stdout=devnull)
+            print('The required Forge version has not been detected on your system.')
+            message = 'install'
+        # Ask the user whether or not they need Forge.
+        if util.query_yes_no('Do you need to {} Forge?'.format(message), default='no'):
+            forge = util.MODS['forge']
+            name = forge['name']
+            version = forge['version']
+            jarName = 'forge.jar'
 
-            os.remove(jarName)
+            if os.name == 'nt':
+                os.chdir(BASE_DIR)
+
+            # Download the Forge installer.
+            print('Downloading {} version {}'.format(name, version))
+            util.downloadFile(forge['url'], jarName)
+
+            if os.name == 'nt':
+                print('You must now run the {} that has been downloaded to your Launchcraft directory.'.format(jarName))
+                util.exit()
+            else:
+                # Run the installer so the user can install Forge.
+                print('You will now be asked to install Forge version {}.'.format(version))
+                with open(os.devnull, 'w') as devnull:
+                    subprocess.call('java -jar {}'.format(jarName), shell=True, stdout=devnull)
+
+                os.remove(jarName)
+    util.print_separator()
 
     JAR_FILE = os.path.join(PROFILE_DIR, '{}.jar'.format(profile_name))
     JSON_FILE = os.path.join(PROFILE_DIR, '{}.json'.format(profile_name))
 
-    # If the Forge directory exists, then we consider Forge to be installed, and we use Forge.
-    if os.path.exists(FORGE_DIR) and util.query_yes_no('Forge has been found on your system. Would you like to use it?', default='no'):
+    if forge:
+        print('Using Forge {} as the base for the profile'.format(util.MODS['forge']['version']))
         if not os.path.exists(MOD_DIR):
             os.makedirs(MOD_DIR)
 
         util.INSTALLED_MODS.append('forge')
         JAR_DIR = FORGE_DIR
+        print('Creating new profile directory.')
         shutil.copytree(FORGE_DIR, PROFILE_DIR)
+        print('Renaming Forge jar.')
         shutil.move(os.path.join(PROFILE_DIR, '{}.jar'.format(FORGE_VERSION)), JAR_FILE)
         SOURCE_JSON_FILE = '{}.json'.format(FORGE_VERSION)
 
         print('Entering newly created profile directory.')
         os.chdir(PROFILE_DIR)
     else:
+        print('Using Minecraft {} as the base for the profile'.format(version))
         # Create the profile directory.
         try:
             print('Creating new profile directory.')
@@ -131,16 +147,20 @@ if __name__ == '__main__':
 
     print('Deleting "{}".'.format(SOURCE_JSON_FILE))
     os.remove(SOURCE_JSON_FILE)
+    util.print_separator()
 
     print('Installing mods.')
+    print('')
     for mod in util.MODS:
         # Do not install forge-dependant mods if Forge is not installed.
         if ('forge' in util.MODS[mod]['deps'] and 'forge' not in util.INSTALLED_MODS) or mod == 'forge':
             continue
 
         util.installDep(mod, JAR_FILE)
+        print('')
 
     util.removeMETAINF(JAR_FILE)
+    util.print_separator()
 
     print('Completed successfully!')
     util.exit()
