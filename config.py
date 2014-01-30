@@ -27,9 +27,9 @@ MODS = {
         'version': '6.0',
         'url': 'http://dl.dropboxusercontent.com/u/20748481/MC/bspkrsCore/latest/%5B1.7.2%5DbspkrsCore-universal-6.0%281.7.2%29.jar'
     },
-    'fml': {
-        'name': 'FML',
-        'version': '7.2.109.863',
-        'url': 'http://files.minecraftforge.net/maven/net/minecraftforge/forge/1.7.2-10.12.0.1019/forge-1.7.2-10.12.0.1019-universal.jar'
+    'forge': {
+        'name': 'Forge',
+        'version': '10.12.0.1019',
+        'url': 'http://files.minecraftforge.net/maven/net/minecraftforge/forge/1.7.2-10.12.0.1019/forge-1.7.2-10.12.0.1019-installer.jar'
     }
 }
