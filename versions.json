@@ -52,8 +52,8 @@
             "deps": [],
             "conflicts": []
         },
-        "seus_shaders": {
-            "name": "Seus' Shaders",
+        "shaders": {
+            "name": "GLSL Shaders Mod",
             "version": "v2.3.3-beta-mc1.7.2-f1019",
             "url": "https://dl.dropboxusercontent.com/s/0pjd55o4e6vf3cp/ShadersModCore-v2.3.3-beta-mc1.7.2-f1019.jar",
             "deps": [
