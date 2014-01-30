@@ -7,7 +7,14 @@ import requests
 
 import launchcraft
 
-DATA = requests.get('https://raw.github.com/Indiv0/launchcraft/master/versions.json').json()
+# Fix certifi dependency.
+# Stolen and adpated from <http://stackoverflow.com/questions/7674790/bundling-data-files-with-pyinstaller-onefile>
+def resource_path(relative):
+    return os.path.join(getattr(sys, '_MEIPASS', os.path.abspath(".")), relative)
+
+cert_path = resource_path('cacert.pem')
+
+DATA = requests.get('https://raw.github.com/Indiv0/launchcraft/master/versions.json', verify=cert_path).json()
 INSTALLED_MODS = []
 MODS = []
 
@@ -28,14 +35,6 @@ class RedirectStdStreams(object):
         self._stderr.flush()
         sys.stdout = self.old_stdout
         sys.stderr = self.old_stderr
-
-
-# Fix certifi dependency.
-# Stolen and adpated from <http://stackoverflow.com/questions/7674790/bundling-data-files-with-pyinstaller-onefile>
-def resource_path(relative):
-    return os.path.join(getattr(sys, '_MEIPASS', os.path.abspath(".")), relative)
-
-cert_path = resource_path('cacert.pem')
 
 
 # Taken from <http://stackoverflow.com/questions/3041986/python-command-line-yes-no-input>
