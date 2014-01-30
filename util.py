@@ -7,7 +7,7 @@ import requests
 
 import launchcraft
 
-DATA = requests.get('http://nikitapek.in/static/versions.json').json()
+DATA = requests.get('https://raw.github.com/Indiv0/launchcraft/master/versions.json').json()
 INSTALLED_MODS = []
 MODS = []
 
