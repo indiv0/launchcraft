@@ -1,6 +1,5 @@
 import os
 import errno
-import sys
 import shutil
 import subprocess
 
@@ -27,7 +26,7 @@ if __name__ == '__main__':
 
     if version not in util.DATA:
         print("Invalid version selected.")
-        sys.exit(1)
+        util.exit()
 
     util.MODS = util.DATA[version]
 
@@ -41,7 +40,7 @@ if __name__ == '__main__':
         os.chdir(MINECRAFT_DIR)
     except:
         print('Failed to enter minecraft directory, please install minecraft first.')
-        sys.exit(1)
+        util.exit()
 
     # Set the directory to which the custom profile will be installed.
     profile_name = raw_input('What would you like to call this profile? [indiv0]: ').lower()
@@ -59,7 +58,7 @@ if __name__ == '__main__':
         else:
             print(ex)
             print('Failed to remove old profile directory, exiting...')
-            sys.exit(1)
+            util.exit()
 
     # Ask the user whether or not they need Forge.
     if util.query_yes_no('Do you need to (re)install Forge?', default='no'):
@@ -77,7 +76,7 @@ if __name__ == '__main__':
 
         if os.name == 'nt':
             print('You must now run the {} that has been downloaded to your Launchcraft directory.'.format(jarName))
-            sys.exit(0)
+            util.exit()
         else:
             # Run the installer so the user can install Forge.
             print('You will now be asked to install Forge version {}.'.format(version))
@@ -110,7 +109,7 @@ if __name__ == '__main__':
         except OSError as ex:
             print(ex)
             print('Failed to create new profile directory, exiting...')
-            sys.exit(1)
+            util.exit()
 
         print('Entering newly created profile directory.')
         os.chdir(PROFILE_DIR)
@@ -133,7 +132,7 @@ if __name__ == '__main__':
     print('Installing mods.')
     for mod in util.MODS:
         # Do not install forge-dependant mods if Forge is not installed.
-        if 'forge' in util.MODS[mod]['deps'] and 'forge' not in util.INSTALLED_MODS:
+        if ('forge' in util.MODS[mod]['deps'] and 'forge' not in util.INSTALLED_MODS) or mod == 'forge':
             continue
 
         util.installDep(mod, JAR_FILE)
@@ -141,7 +140,4 @@ if __name__ == '__main__':
     util.removeMETAINF(JAR_FILE)
 
     print('Completed successfully!')
-    try:
-        input("Press any key to exit...")
-    except:
-        pass
+    util.exit()

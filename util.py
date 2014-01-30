@@ -96,14 +96,14 @@ def installDep(key, jar, query=True):
 
     print('Installing {} dependencies.'.format(name))
     for dep in mod['deps']:
-        if dep is 'forge':
+        if dep == 'forge':
             depends_on_forge = True
         installDep(dep, jar, False)
 
         # If the requested mod depends on Forge and Forge is not installed, the installation fails.
         if dep not in INSTALLED_MODS:
             print('Unable to install required dependency "{}"'.format(dep))
-            sys.exit(1)
+            exit()
 
     if depends_on_forge:
         installForgeMod(key, jar, query)
@@ -165,3 +165,10 @@ def removeMETAINF(jar):
                 zout.writestr(item, buffer)
     os.remove(jar)
     os.rename(new_jar, jar)
+
+
+def exit():
+    try:
+        input("Press any key to exit...")
+    except:
+        pass
