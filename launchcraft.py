@@ -20,6 +20,9 @@ VERSIONS_DIR = os.path.join(MINECRAFT_DIR, 'versions')
 MOD_DIR = os.path.join(MINECRAFT_DIR, 'mods')
 
 if __name__ == '__main__':
+    print('This script will ask you yes or no questions.')
+    print('Any answers in square brackets (e.g. [1.7.2]), or that are capitalized (e.g. [Y/n]) are the default answers, and will be selected when you press enter.')
+
     version = raw_input('Which version of Minecraft would you like to use? [1.7.2]:').lower()
     if version == '':
         version = '1.7.2'
@@ -43,7 +46,7 @@ if __name__ == '__main__':
         util.exit()
 
     # Set the directory to which the custom profile will be installed.
-    profile_name = raw_input('What would you like to call this profile? [indiv0]: ').lower()
+    profile_name = raw_input('What would you like to call the profile being created? [indiv0]: ').lower()
     if profile_name == '':
         profile_name = 'indiv0'
     PROFILE_DIR = os.path.join(VERSIONS_DIR, profile_name)
