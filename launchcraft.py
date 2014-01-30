@@ -152,8 +152,28 @@ if __name__ == '__main__':
     print('Installing mods.')
     print('')
     for mod in util.MODS:
+        modData = util.MODS[mod]
+        skip = False
+
+        conflicts = [i for i in modData['conflicts'] if i in util.INSTALLED_MODS]
+
+        if mod == 'forge':
+            continue
+
         # Do not install forge-dependant mods if Forge is not installed.
-        if ('forge' in util.MODS[mod]['deps'] and 'forge' not in util.INSTALLED_MODS) or mod == 'forge':
+        if 'forge' in modData['deps'] and 'forge' not in util.INSTALLED_MODS:
+            print('Skipping {} due to missing Forge'.format(modData['name']))
+            skip = True
+        # Skip conflicting mods
+        elif conflicts:
+            conflicting_mods = ""
+            for i in conflicts:
+                conflicting_mods += util.MODS[i]['name'] + ", "
+            print('Skipping {} because it conflicts with {}'.format(modData['name'], conflicting_mods[:-2]))
+            skip = True
+
+        if skip:
+            print('')
             continue
 
         util.installDep(mod, JAR_FILE)
