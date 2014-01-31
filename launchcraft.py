@@ -11,6 +11,8 @@ import util
 # The home directory will be different on Linux and Windows.
 if os.getenv('APPDATA') is not None:
     home = os.getenv('APPDATA')
+elif os.name == 'posix':
+    home = os.path.join(os.path.expanduser("~"), 'Library', 'Application Support', 'minecraft')
 else:
     home = os.path.expanduser("~")
 
