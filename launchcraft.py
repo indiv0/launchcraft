@@ -9,9 +9,9 @@ import util
 
 
 # The home directory will be different on Linux and Windows.
-if os.name == 'nt':
+if sys.platform == 'win32' or sys.platform == 'cygwin':
     MINECRAFT_DIR = os.path.join(os.getenv('APPDATA'), '.minecraft')
-elif os.name == 'posix':
+elif sys.platform == 'darwin':
     MINECRAFT_DIR = os.path.join(os.path.expanduser("~"), 'Library', 'Application Support', 'minecraft')
 else:
     MINECRAFT_DIR = os.path.join(os.path.expanduser("~"), '.minecraft')
@@ -83,14 +83,14 @@ if __name__ == '__main__':
             version = forge['version']
             jarName = 'forge.jar'
 
-            if os.name == 'nt':
+            if sys.platform == 'win32' or sys.platform == 'cygwin':
                 os.chdir(BASE_DIR)
 
             # Download the Forge installer.
             print('Downloading {} version {}'.format(name, version))
             util.downloadFile(forge['url'], jarName)
 
-            if os.name == 'nt':
+            if sys.platform == 'win32' or sys.platform == 'cygwin':
                 print('You must now run the {} that has been downloaded to your Launchcraft directory.'.format(jarName))
                 util.exit()
             else:
