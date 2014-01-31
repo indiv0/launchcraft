@@ -12,7 +12,7 @@ import util
 if os.name == 'nt':
     MINECRAFT_DIR = os.path.join(os.getenv('APPDATA'), '.minecraft')
 elif os.name == 'posix':
-    MINECRAFT_DIR = os.path.join(os.path.expanduser("~"), 'Library', 'Application Support', '.minecraft')
+    MINECRAFT_DIR = os.path.join(os.path.expanduser("~"), 'Library', 'Application Support', 'minecraft')
 else:
     MINECRAFT_DIR = os.path.join(os.path.expanduser("~"), '.minecraft')
 
