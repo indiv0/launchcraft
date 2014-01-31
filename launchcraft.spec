@@ -37,3 +37,10 @@ app = BUNDLE(exe,
           name=NAME,
           console=True,
           icon='launchcraft.ico')
+coll = COLLECT(exe,
+          a.binaries,
+          a.zipfiles,
+          a.datas,
+          strip=None,
+          upx=True,
+          name=NAME)
