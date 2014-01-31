@@ -10,3 +10,9 @@ Windows [compilation](https://github.com/Indiv0/launchcraft/wiki/Windows----Comp
 
 Linux [instructions](https://github.com/Indiv0/launchcraft/wiki/Linux) are also available on the wiki.
 
+Testimonials
+============
+
+* `fucktacular` - /u/franknbrry
+
+* `Dis cool.` - /u/jehtak3
