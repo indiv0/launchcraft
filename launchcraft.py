@@ -184,3 +184,8 @@ if __name__ == '__main__':
 
     print('Completed successfully!')
     util.exit()
+
+    try:
+        input('Press any key to exit...')
+    except:
+        pass

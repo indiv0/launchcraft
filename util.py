@@ -4,8 +4,10 @@ import shutil
 
 import zipfile
 import requests
+from clint.textui import progress
 
 import launchcraft
+
 
 # Fix certifi dependency.
 # Stolen and adpated from <http://stackoverflow.com/questions/7674790/bundling-data-files-with-pyinstaller-onefile>
@@ -70,9 +72,13 @@ def query_yes_no(question, default="yes"):
 
 
 def downloadFile(url, filename):
-    r = requests.get(url, verify=cert_path)
-    output = open(filename, 'wb')
-    output.write(r.content)
+    r = requests.get(url, stream=True, verify=cert_path)
+    with open(filename, 'wb') as f:
+        total_length = int(r.headers.get('content-length'))
+        for chunk in progress.bar(r.iter_content(chunk_size=1024), expected_size=(total_length / 1024) + 1):
+            if chunk:
+                f.write(chunk)
+                f.flush()
 
 
 def installDep(key, jar, query=True):
@@ -172,7 +178,8 @@ def exit():
         input('Press any key to exit...')
     except:
         pass
+        sys.exit(1)
 
 
 def print_separator():
-    print('#########################################')
+    print('###############################################################')
