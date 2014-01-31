@@ -44,3 +44,6 @@ coll = COLLECT(exe,
           strip=None,
           upx=True,
           name=NAME)
+app = BUNDLE(coll,
+          name=NAME,
+          icon='launchcraft.ico')
