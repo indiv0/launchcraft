@@ -34,13 +34,7 @@ exe = EXE(pyz,
           upx=True,
           console=True,
           icon='launchcraft.ico')
-coll = COLLECT(exe,
-          a.binaries,
-          a.zipfiles,
-          a.datas,
-          strip=None,
-          upx=True,
-          name=NAME)
-app = BUNDLE(coll,
+app = BUNDLE(exe,
           name=NAME + '.app',
-          icon='launchcraft.ico')
+          icon='launchcraft.ico',
+          console=False)
