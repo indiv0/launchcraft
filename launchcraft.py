@@ -9,15 +9,14 @@ import util
 
 
 # The home directory will be different on Linux and Windows.
-if os.getenv('APPDATA') is not None:
-    home = os.getenv('APPDATA')
+if os.name == 'nt':
+    MINECRAFT_DIR = os.path.join(os.getenv('APPDATA'), '.minecraft')
 elif os.name == 'posix':
-    home = os.path.join(os.path.expanduser("~"), 'Library', 'Application Support', 'minecraft')
+    MINECRAFT_DIR = os.path.join(os.path.expanduser("~"), 'Library', 'Application Support', '.minecraft')
 else:
-    home = os.path.expanduser("~")
+    MINECRAFT_DIR = os.path.join(os.path.expanduser("~"), '.minecraft')
 
 BASE_DIR = os.getcwd()
-MINECRAFT_DIR = os.path.join(home, '.minecraft')
 VERSIONS_DIR = os.path.join(MINECRAFT_DIR, 'versions')
 MOD_DIR = os.path.join(MINECRAFT_DIR, 'mods')
 
