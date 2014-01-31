@@ -33,3 +33,10 @@ exe = EXE(pyz,
           upx=True,
           console=True,
           icon='launchcraft.ico')
+coll = COLLECT(exe,
+          a.scripts,
+          a.binaries,
+          a.zipfiles,
+          a.datas,
+          upx=True,
+          name='launchcraft')
