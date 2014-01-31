@@ -23,7 +23,7 @@ a.datas.append(('cacert.pem', cert_path, 'DATA'))
 
 pyz = PYZ(a.pure)
 exe = EXE(pyz,
-          a.scripts + [('O','','OPTION')],
+          a.scripts,
           a.binaries,
           a.zipfiles,
           a.datas,
@@ -34,7 +34,3 @@ exe = EXE(pyz,
           upx=True,
           console=True,
           icon='launchcraft.ico')
-app = BUNDLE(exe,
-          name=NAME + '.app',
-          icon='launchcraft.ico',
-          console=False)
