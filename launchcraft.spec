@@ -40,3 +40,5 @@ coll = COLLECT(exe,
           a.datas,
           upx=True,
           name='launchcraft')
+app = BUNDLE(coll,
+          name='bundle')
