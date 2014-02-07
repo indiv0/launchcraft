@@ -8,7 +8,10 @@ Benefits
 
 * Rapid, controlled installation of latest Forge, Minecraft, mods, resourcepacks, shaderpacks
 * Written in Python
-* Cross-platform ([OS X](http://i.imgur.com/EmUsLrs.gif), Windows, Linux)
+* Cross-platform
+  * [OS X 10.6+](http://i.imgur.com/EmUsLrs.gif)
+  * Windows 32/64-bit
+  * [Linux](http://i.imgur.com/bb7d6fm.gif)
 * Open-source
 * Frequently updead
 * Open to input regarding included packs and additional features
@@ -51,7 +54,7 @@ Whether or not it finds it, it will give you the option to (re)install it:
 **Note:** On Linux, the Forge Client installer will download and open automatically.
 On Windows and OS X the program will download the jar into the same directory Launchcraft is in, but Launchcraft will exit and you will have to install it manually. After you have installed it manually, run Launchcraft again and repeat the previous steps (but don't install Forge Client again).
 
-The program will then ask you to install mods, and guide ask you which ones you want. It will not allow you to install incompatible or conflicting mods:
+The program will then ask you to install mods, and ask you which ones you want. It will not allow you to install incompatible or conflicting mods:
 
 ![](http://i.imgur.com/bb7d6fm.gif)
 
