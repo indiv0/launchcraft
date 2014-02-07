@@ -10,7 +10,7 @@ Benefits
 * Written in Python
 * Cross-platform
   * [OS X 10.6+](http://i.imgur.com/EmUsLrs.gif)
-  * Windows 32/64-bit
+  * [Windows](http://i.imgur.com/g70NYcQ.gif) 32/64-bit
   * [Linux](http://i.imgur.com/bb7d6fm.gif)
 * Open-source
 * Frequently updead
