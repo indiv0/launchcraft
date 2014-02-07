@@ -6,7 +6,7 @@ A python script to automate the installation of my preferred minecraft setup.
 Benefits
 ========
 
-* Rapid, controlled installation of latest Forge, Minecraft, mods, resourcepacks, shaderpacks
+* Rapid, controlled, installation of latest Forge, Minecraft, mods, resourcepacks, shaderpacks
 * Written in Python
 * Cross-platform
   * [OS X 10.6+](http://i.imgur.com/EmUsLrs.gif)
