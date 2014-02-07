@@ -8,6 +8,8 @@ import json
 
 import util
 
+VERSION = '1.0.5'
+
 
 # The home directory will be different on Linux and Windows.
 if sys.platform == 'win32' or sys.platform == 'cygwin':
