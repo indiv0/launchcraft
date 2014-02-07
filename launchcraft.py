@@ -22,8 +22,14 @@ else:
 BASE_DIR = os.getcwd()
 VERSIONS_DIR = os.path.join(MINECRAFT_DIR, 'versions')
 MOD_DIR = os.path.join(MINECRAFT_DIR, 'mods')
+RESOURCEPACK_DIR = os.path.join(MINECRAFT_DIR, 'resourcepacks')
+SHADERPACK_DIR = os.path.join(MINECRAFT_DIR, 'shaderpacks')
 
 if __name__ == '__main__':
+    if util.DATA['version'] != VERSION:
+        print('Your version of Launchcraft ({}) does not match the minimum version of Launchcraft ({}). Please update.'.format(VERSION, util.DATA['version']))
+        util.exit()
+
     print('This script will ask you yes or no questions.')
     print('Any answers in square brackets (e.g. [1.7.2]), or that are capitalized (e.g. [Y/n]) are the default answers, and will be selected when you press enter.')
     util.print_separator()
@@ -32,15 +38,15 @@ if __name__ == '__main__':
     if version == '':
         version = '1.7.2'
 
-    if version not in util.DATA:
+    if version not in util.DATA['versions']:
         print("Invalid version selected.")
         util.exit()
 
-    util.MODS = util.DATA[version]
+    util.MODS = util.DATA['versions'][version]
 
     JAR_DIR = os.path.join(VERSIONS_DIR, version)
 
-    FORGE_VERSION = '{}-Forge{}'.format(version, util.MODS['forge']['version'])
+    FORGE_VERSION = '{}-Forge{}'.format(version, util.MODS['mods']['forge']['version'])
     FORGE_DIR = os.path.join(VERSIONS_DIR, FORGE_VERSION)
 
     print('Entering directory "{}".'.format(MINECRAFT_DIR))
@@ -81,7 +87,7 @@ if __name__ == '__main__':
             message = 'install'
         # Ask the user whether or not they need Forge.
         if util.query_yes_no('Do you need to {} Forge?'.format(message), default='no'):
-            forge = util.MODS['forge']
+            forge = util.MODS['mods']['forge']
             name = forge['name']
             version = forge['version']
             jarName = 'forge.jar'
@@ -109,7 +115,7 @@ if __name__ == '__main__':
     JSON_FILE = os.path.join(PROFILE_DIR, '{}.json'.format(profile_name))
 
     if forge:
-        print('Using Forge {} as the base for the profile'.format(util.MODS['forge']['version']))
+        print('Using Forge {} as the base for the profile'.format(util.MODS['mods']['forge']['version']))
         if not os.path.exists(MOD_DIR):
             os.makedirs(MOD_DIR)
 
@@ -153,37 +159,62 @@ if __name__ == '__main__':
     os.remove(SOURCE_JSON_FILE)
     util.print_separator()
 
-    print('Installing mods.')
-    print('')
-    for mod in util.MODS:
-        modData = util.MODS[mod]
-        skip = False
-
-        conflicts = [i for i in modData['conflicts'] if i in util.INSTALLED_MODS]
-
-        if mod == 'forge':
-            continue
-
-        # Do not install forge-dependant mods if Forge is not installed.
-        if 'forge' in modData['deps'] and 'forge' not in util.INSTALLED_MODS:
-            print('Skipping {} due to missing Forge'.format(modData['name']))
-            skip = True
-        # Skip conflicting mods
-        elif conflicts:
-            conflicting_mods = ""
-            for i in conflicts:
-                conflicting_mods += util.MODS[i]['name'] + ", "
-            print('Skipping {} because it conflicts with {}'.format(modData['name'], conflicting_mods[:-2]))
-            skip = True
-
-        if skip:
-            print('')
-            continue
-
-        util.installDep(mod, JAR_FILE)
+    if util.query_yes_no('Do you want to install mods?', default='no'):
+        print('Installing mods.')
         print('')
+        for mod in util.MODS['mods']:
+            modData = util.MODS['mods'][mod]
+            skip = False
+
+            conflicts = [i for i in modData['conflicts'] if i in util.INSTALLED_MODS]
+
+            if mod == 'forge':
+                continue
+
+            # Do not install forge-dependant mods if Forge is not installed.
+            if 'forge' in modData['deps'] and 'forge' not in util.INSTALLED_MODS:
+                print('Skipping {} due to missing Forge'.format(modData['name']))
+                skip = True
+            # Skip conflicting mods
+            elif conflicts:
+                conflicting_mods = ""
+                for i in conflicts:
+                    conflicting_mods += util.MODS['mods'][i]['name'] + ", "
+                print('Skipping {} because it conflicts with {}'.format(modData['name'], conflicting_mods[:-2]))
+                skip = True
+
+            if skip:
+                print('')
+                continue
+
+            util.installDep(mod, JAR_FILE)
+            print('')
 
     util.removeMETAINF(JAR_FILE)
+    util.print_separator()
+
+    if util.query_yes_no('Do you want to install texture packs?', default='no'):
+        if not os.path.exists(RESOURCEPACK_DIR):
+            os.makedirs(RESOURCEPACK_DIR)
+        print('Installing resourcepacks.')
+        print('')
+        for pack in util.MODS['resourcepacks']:
+            packData = util.MODS['resourcepacks'][pack]
+
+            util.installResourcePack(pack)
+            print('')
+    util.print_separator()
+
+    if util.query_yes_no('Do you want to install shader packs?', default='no'):
+        if not os.path.exists(SHADERPACK_DIR):
+            os.makedirs(SHADERPACK_DIR)
+        print('Installing shaderpacks.')
+        print('')
+        for pack in util.MODS['shaderpacks']:
+            packData = util.MODS['shaderpacks'][pack]
+
+            util.installShaderPack(pack)
+            print('')
     util.print_separator()
 
     print('Completed successfully!')

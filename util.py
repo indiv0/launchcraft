@@ -16,7 +16,9 @@ def resource_path(relative):
 
 cert_path = resource_path('cacert.pem')
 
-DATA = requests.get('https://raw.github.com/Indiv0/launchcraft/master/versions.json', verify=cert_path).json()
+#DATA = requests.get('https://raw.github.com/Indiv0/launchcraft/master/versions.json', verify=cert_path).json()
+import versions
+DATA = versions.mods
 INSTALLED_MODS = []
 MODS = []
 
@@ -90,7 +92,7 @@ def installDep(key, jar, query=True):
     if key in INSTALLED_MODS:
         return
 
-    mod = MODS[key]
+    mod = MODS['mods'][key]
     name = mod['name']
 
     # If it is not a dependency and the user does not want the mod, do not install it.
@@ -111,13 +113,13 @@ def installDep(key, jar, query=True):
             exit()
 
     if depends_on_forge:
-        installForgeMod(key, jar, query)
+        installForgeMod(key, jar)
     else:
-        installJar(key, jar, query)
+        installJar(key, jar)
 
 
-def installJar(key, jar, query=True):
-    mod = MODS[key]
+def installJar(key, jar):
+    mod = MODS['mods'][key]
     name = mod['name']
 
     tempDir = 'jar_temp'
@@ -141,8 +143,8 @@ def installJar(key, jar, query=True):
     INSTALLED_MODS.append(key)
 
 
-def installForgeMod(key, jar, query=True):
-    mod = MODS[key]
+def installForgeMod(key, jar):
+    mod = MODS['mods'][key]
     name = mod['name']
     version = mod['version']
     url = mod['url']
@@ -159,6 +161,46 @@ def installForgeMod(key, jar, query=True):
     INSTALLED_MODS.append(key)
 
 
+def installResourcePack(key):
+    mod = MODS['resourcepacks'][key]
+    name = mod['name']
+    version = mod['version']
+    url = mod['url']
+
+    # If the user does not want the pack, do not install it.
+    if not query_yes_no("Install {}?".format(name), default="no"):
+        return
+
+    current = os.getcwd()
+
+    os.chdir(launchcraft.RESOURCEPACK_DIR)
+
+    print('Downloading {} version {}'.format(name, version))
+    downloadFile(url, '{}-{}.{}'.format(key, version, url[-3:]))
+
+    os.chdir(current)
+
+
+def installShaderPack(key):
+    mod = MODS['shaderpacks'][key]
+    name = mod['name']
+    version = mod['version']
+    url = mod['url']
+
+    # If the user does not want the pack, do not install it.
+    if not query_yes_no("Install {}?".format(name), default="no"):
+        return
+
+    current = os.getcwd()
+
+    os.chdir(launchcraft.SHADERPACK_DIR)
+
+    print('Downloading {} version {}'.format(name, version))
+    downloadFile(url, '{}-{}.{}'.format(key, version, url[-3:]))
+
+    os.chdir(current)
+
+
 def removeMETAINF(jar):
     print('Removing META-INF from {}'.format(jar))
 
@@ -173,12 +215,12 @@ def removeMETAINF(jar):
     os.rename(new_jar, jar)
 
 
-def exit():
+def exit(exit=1):
     try:
         input('Press any key to exit...')
     except:
         pass
-        sys.exit(1)
+        sys.exit(exit)
 
 
 def print_separator():
