@@ -16,9 +16,7 @@ def resource_path(relative):
 
 cert_path = resource_path('cacert.pem')
 
-#DATA = requests.get('https://raw.github.com/Indiv0/launchcraft/master/versions.json', verify=cert_path).json()
-import versions
-DATA = versions.mods
+DATA = requests.get('https://raw.github.com/Indiv0/launchcraft/master/versions.json', verify=cert_path).json()
 INSTALLED_MODS = []
 MODS = []
 
