@@ -95,42 +95,32 @@
                 "sphax_pure_bdcraft_128": {
                     "name": "Sphax Pure BDCraft x128",
                     "version": "17",
-                    "url": "http://www.creeperrepo.net/direct/sphax/ad08baa74cd79be09dc8c99ce74695d2/Sphax%20PureBDcraft%20128x%20MC17.zip"
-                },
-                "r3dcraft_shader_smooth_512": {
-                    "name": "R3D.CRAFT Smooth Shader x512",
-                    "version": "0.1.0",
-                    "url": "http://download1818.mediafire.com/jb6f71m179gg/vri9dymj98sn59c/%5B1.7%5D_R3D.CRAFT_N_MAPS_SR-512x_v0.1.0.zip"
+                    "url": "https://dl.dropboxusercontent.com/u/10308589/launchcraft/1.7.2/resourcepacks/Sphax%20PureBDcraft%20128x%20MC17.zip"
                 },
                 "r3dcraft_shader_smooth_256": {
                     "name": "R3D.CRAFT Smooth Shader x256",
                     "version": "0.1.0",
-                    "url": "http://download796.mediafire.com/2592b3qytsjg/y1hzqekapyhlz97/%5B1.7%5D_R3D.CRAFT_N_MAPS_SR-256x_v0.1.0.zip"
+                    "url": "https://dl.dropboxusercontent.com/u/10308589/launchcraft/1.7.2/resourcepacks/%5B1.7%5D_R3D.CRAFT_N_MAPS_SR-256x_v0.1.0.zip"
                 },
                 "r3dcraft_shader_smooth_128": {
                     "name": "R3D.CRAFT Smooth Shader x128",
                     "version": "0.1.0",
-                    "url": "http://download805.mediafire.com/un628ulawnwg/e7814jgsg27mssh/%5B1.7%5D_R3D.CRAFT_N_MAPS_SR-128x_v0.1.0.zip"
+                    "url": "https://dl.dropboxusercontent.com/u/10308589/launchcraft/1.7.2/resourcepacks/%5B1.7%5D_R3D.CRAFT_N_MAPS_SR-128x_v0.1.0.zip"
                 },
                 "r3dcraft_shader_smooth_64": {
                     "name": "R3D.CRAFT Smooth Shader x64",
                     "version": "0.1.0",
                     "url": "https://dl.dropboxusercontent.com/u/10308589/launchcraft/1.7.2/resourcepacks/%5B1.7%5D_R3D.CRAFT_N_MAPS_SR-64x_v0.1.0.zip"
                 },
-                "r3dcraft_default_512": {
-                    "name": "R3D.CRAFT Regular x512",
-                    "version": "0.1.5",
-                    "url": "http://download644.mediafire.com/32y8zvsttzxg/ck6omea9s06hcm9/%5B1.7%5D_R3D.CRAFT_DR-512x_v0.1.5.zip"
-                },
                 "r3dcraft_default_256": {
                     "name": "R3D.CRAFT Regular x256",
                     "version": "0.1.5",
-                    "url": "http://download660.mediafire.com/8e7mrmaeaf3g/p09tzbb2pk7lq1g/%5B1.7%5D_R3D.CRAFT_DR-256x_v0.1.5.zip"
+                    "url": "https://dl.dropboxusercontent.com/u/10308589/launchcraft/1.7.2/resourcepacks/%5B1.7%5D_R3D.CRAFT_DR-256x_v0.1.5.zip"
                 },
                 "r3dcraft_default_128": {
                     "name": "R3D.CRAFT Regular x128",
                     "version": "0.1.5",
-                    "url": "http://download1331.mediafire.com/zd7n0ng2zvqg/0ahl9cf8y2760st/%5B1.7%5D_R3D.CRAFT_DR-128x_v0.1.5.zip"
+                    "url": "https://dl.dropboxusercontent.com/u/10308589/launchcraft/1.7.2/resourcepacks/%5B1.7%5D_R3D.CRAFT_DR-128x_v0.1.5.zip"
                 },
                 "ocd": {
                     "name": "OCD Texture Pack",
