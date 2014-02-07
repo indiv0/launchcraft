@@ -3,6 +3,16 @@ launchcraft
 
 A python script to automate the installation of my preferred minecraft setup.
 
+Benefits
+========
+
+* Rapid, controlled installation of latest Forge, Minecraft, mods, resourcepacks, shaderpacks
+* Written in Python
+* Cross-platform ([OS X](http://i.imgur.com/EmUsLrs.gif), Windows, Linux)
+* Open-source
+* Frequently updead
+* Open to input regarding included packs and additional features
+
 Download
 ========
 
@@ -75,6 +85,21 @@ If you chose to use Forge, you **MUST** add the following to `JVM Arguments` in 
 Save the profile.
 
 Enjoy the game!
+
+Notes
+=====
+
+Forge
+-----
+
+Uninstalling Forge mods must be done *manually* by deleting the unneeded mods from `.minecraft/mods/`.
+
+Forge mods installed by Launchcraft **will conflict** with mods installed manually. Be sure to remove any conflicting mods.
+
+REI's Minimap
+-------------
+
+The latest version of REI's Minimap is **not compatible** with Forge.
 
 Compile
 =======
