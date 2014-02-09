@@ -70,6 +70,25 @@ def query_yes_no(question, default="yes"):
         else:
             sys.stdout.write("Please respond with 'yes' or 'no' (or 'y' or 'n').\n")
 
+def printAskOptions(optionList):
+    numberedMods = []
+    for index, option in enumerate(x for x in optionList if x != 'forge'):
+        print('{} - {}'.format(index + 1, optionList[option]['name']))
+        numberedMods.append(option)
+    print('---------------')
+    print('[1 2 3 etc... {all}]')
+    answer = ''
+    while not answer:
+        answer = raw_input('-->')
+        if answer == 'all':
+            return numberedMods
+        else:
+            answer = answer.split()
+        if all((x.isdigit() for x in answer)):
+            answer = [int(x) for x in answer]
+        else:
+            answer = ''
+    return (mods for mods in numberedMods if numberedMods.index(mods) + 1 in answer)
 
 def downloadFile(url, filename):
     r = requests.get(url, stream=True, verify=cert_path)
@@ -92,10 +111,6 @@ def installDep(key, jar, query=True):
 
     mod = MODS['mods'][key]
     name = mod['name']
-
-    # If it is not a dependency and the user does not want the mod, do not install it.
-    if query and not query_yes_no("Install {}?".format(name)):
-        return
 
     depends_on_forge = False
 
@@ -165,9 +180,6 @@ def installResourcePack(key):
     version = mod['version']
     url = mod['url']
 
-    # If the user does not want the pack, do not install it.
-    if not query_yes_no("Install {}?".format(name), default="no"):
-        return
 
     current = os.getcwd()
 
@@ -184,10 +196,6 @@ def installShaderPack(key):
     name = mod['name']
     version = mod['version']
     url = mod['url']
-
-    # If the user does not want the pack, do not install it.
-    if not query_yes_no("Install {}?".format(name), default="no"):
-        return
 
     current = os.getcwd()
 
