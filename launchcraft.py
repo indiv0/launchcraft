@@ -160,9 +160,11 @@ if __name__ == '__main__':
     util.print_separator()
 
     if util.query_yes_no('Do you want to install mods?', default='no'):
+        print('Which mods would you like to install?')
+        toInstall = util.printAskOptions(util.MODS['mods'])
         print('Installing mods.')
         print('')
-        for mod in util.MODS['mods']:
+        for mod in toInstall:
             modData = util.MODS['mods'][mod]
             skip = False
 
@@ -196,9 +198,11 @@ if __name__ == '__main__':
     if util.query_yes_no('Do you want to install texture packs?', default='no'):
         if not os.path.exists(RESOURCEPACK_DIR):
             os.makedirs(RESOURCEPACK_DIR)
+        print("What texture packs would you like to install?")
+        toInstall = util.printAskOptions(util.MODS['resourcepacks'])
         print('Installing resourcepacks.')
         print('')
-        for pack in util.MODS['resourcepacks']:
+        for pack in toInstall:
             packData = util.MODS['resourcepacks'][pack]
 
             util.installResourcePack(pack)
@@ -208,9 +212,11 @@ if __name__ == '__main__':
     if util.query_yes_no('Do you want to install shader packs?', default='no'):
         if not os.path.exists(SHADERPACK_DIR):
             os.makedirs(SHADERPACK_DIR)
+        print("What shader packs would you like to install?")
+        toInstall = util.printAskOptions(util.MODS['shaderpacks'])
         print('Installing shaderpacks.')
         print('')
-        for pack in util.MODS['shaderpacks']:
+        for pack in toInstall:
             packData = util.MODS['shaderpacks'][pack]
 
             util.installShaderPack(pack)
