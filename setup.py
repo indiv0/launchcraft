@@ -37,8 +37,8 @@ setup(
     author='Nikita Pekin',
     author_email='contact@nikitapek.in',
     license='GPL-3.0',
-    package_dir={'': 'src'},
     packages=find_packages('src'),
+    package_dir={'': 'src'},
     zip_safe=False,
     install_requires=install_requires,
     extras_require={
