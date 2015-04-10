@@ -18,9 +18,8 @@ dev_requires = [
 ]
 
 tests_require = [
-    'pytest-cov>=1.4',
+    'pytest',
     'pytest-timeout',
-    'python-coveralls',
 ]
 
 

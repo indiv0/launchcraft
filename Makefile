@@ -37,11 +37,7 @@ lint-python:
 	PYFLAKES_NODOCTEST=1 flake8 src/launchcraft tests
 	@echo ""
 
-coverage: develop
-	coverage run --source=src/launchcraft -m py.test
-	coverage html
-
 publish:
 	python setup.py sdist bdist_wheel upload
 
-.PHONY: develop clean test test-python lint lint-python coverage publish
+.PHONY: develop clean test test-python lint lint-python publish
