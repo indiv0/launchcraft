@@ -1,0 +1,11 @@
+Version 1.1.0
+-------------
+
+- Updated mods, etc. for 1.7.10
+- Add pre-commit hooks for automatic linting
+- Updated Makefile
+- Enabled Travis CI
+- Added some test cases
+- Move to a setuptools based installation
+
+(History beyond 1.1.0 is not present)
