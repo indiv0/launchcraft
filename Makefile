@@ -21,6 +21,10 @@ clean:
 
 test: develop lint test-python
 
+testloop: develop
+	pip install pytest-xdist
+	py.test tests -f
+
 test-python:
 	@echo "--> Running Python tests"
 	py.test tests || exit 1
