@@ -145,6 +145,186 @@
                     "url": "https://dl.dropboxusercontent.com/u/10308589/launchcraft/1.7.2/shaderpacks/SEUS_v10.1_preview1.zip"
                 }
             }
+        },
+        "1.7.10": {
+            "mods": {
+                "optifine": {
+                    "name": "Optifine",
+                    "version": "1.7.10_HD_U_B5",
+                    "url": "http://optifine.net/download.php?f=OptiFine_1.7.10_HD_U_B5.jar",
+                    "deps": [
+                        "forge"
+                    ],
+                    "conflicts": []
+                },
+                "forge": {
+                    "name": "Forge",
+                    "version": "10.13.3.1360-1.7.10",
+                    "url": "http://files.minecraftforge.net/maven/net/minecraftforge/forge/1.7.10-10.13.3.1360-1.7.10/forge-1.7.10-10.13.3.1360-1.7.10-installer.jar",
+                    "deps": [],
+                    "conflicts": []
+                },
+                "bspkrs_core": {
+                    "name": "bspkrsCore",
+                    "version": "6.16",
+                    "url": "http://bspk.rs/MC/bspkrsCore/%5B1.7.10%5DbspkrsCore-universal-6.16.jar",
+                    "deps": [
+                        "forge"
+                    ],
+                    "conflicts": []
+                },
+                "armor_status_hud": {
+                    "name": "Armor Status HUD",
+                    "version": "1.28",
+                    "url": "http://bspk.rs/MC/ArmorStatusHUD/%5B1.7.10%5DArmorStatusHUD-client-1.28.jar",
+                    "deps": [
+                        "forge",
+                        "bspkrs_core"
+                    ],
+                    "conflicts": []
+                },
+                "direction_hud": {
+                    "name": "Direction HUD",
+                    "version": "1.24",
+                    "url": "http://bspk.rs/MC/DirectionHUD/%5B1.7.10%5DDirectionHUD-client-1.24.jar",
+                    "deps": [
+                        "forge",
+                        "bspkrs_core"
+                    ],
+                    "conflicts": []
+                },
+                "status_effect_hud": {
+                    "name": "Status Effect HUD",
+                    "version": "1.27",
+                    "url": "http://bspk.rs/MC/StatusEffectHUD/%5B1.7.10%5DStatusEffectHUD-client-1.27.jar",
+                    "deps": [
+                        "forge",
+                        "bspkrs_core"
+                    ],
+                    "conflicts": []
+                },
+                "lunatrius_core": {
+                    "name": "Lunatrius Core",
+                    "version": "1.1.2.21",
+                    "url": "http://mc.lunatri.us/files/com.github.lunatrius/LunatriusCore/1.7.10-1.1.2.21/LunatriusCore-1.7.10-1.1.2.21-universal.jar",
+                    "deps": [
+                        "forge"
+                    ],
+                    "conflicts": []
+                },
+                "in_game_info_xml": {
+                    "name": "InGameInfo XML",
+                    "version": "2.8.1.80",
+                    "url": "http://mc.lunatri.us/files/com.github.lunatrius/InGameInfoXML/1.7.10-2.8.1.80/InGameInfoXML-1.7.10-2.8.1.80-universal.jar",
+                    "deps": [
+                        "forge",
+                        "lunatrius_core"
+                    ],
+                    "conflicts": []
+                },
+                "journeymap": {
+                    "name": "JourneyMap",
+                    "version": "5.0.1",
+                    "url": "http://addons-origin.cursecdn.com/files/2221/283/JourneyMap5.0.1_Unlimited_MC1.7.10.jar",
+                    "deps": [
+                        "forge"
+                    ],
+                    "conflicts": []
+                },
+                "player_api": {
+                    "name": "Player API",
+                    "version": "1.0",
+                    "url": "https://dl.dropboxusercontent.com/u/10308589/launchcraft/1.7.10/mods/shaders/PlayerAPI-1.7.10-1.0.jar",
+                    "deps": [
+                        "forge"
+                    ],
+                    "conflicts": []
+                },
+                "togglesneak": {
+                    "name": "ToggleSneak",
+                    "version": "3.0.5",
+                    "url": "https://dl.dropboxusercontent.com/u/49623680/ToggleSneak-(1.7.10)-v3.0.5.jar",
+                    "deps": [
+                        "forge",
+                        "player_api"
+                    ],
+                    "conflicts": []
+                },
+                "shaders": {
+                    "name": "GLSL Shaders Mod",
+                    "version": "v2.3.12-mc1.7.2-f1040",
+                    "url": "https://dl.dropboxusercontent.com/u/10308589/launchcraft/1.7.10/mods/shaders/ShadersModCore-v2.3.12-mc1.7.2-f1040.jar",
+                    "deps": [
+                        "forge",
+                        "optifine"
+                    ],
+                    "conflicts": []
+                },
+                "dynamic_lights": {
+                    "name": "Dynamic Lights",
+                    "version": "1.7.10",
+                    "url": "https://raw.githubusercontent.com/AtomicStryker/github.io/master/files/1.7.10/DynamicLights-1.7.10.zip",
+                    "deps": [
+                        "forge",
+                        "optifine"
+                    ],
+                    "conflicts": []
+                }
+            },
+            "resourcepacks": {
+                "sphax_pure_bdcraft_128": {
+                    "name": "Sphax Pure BDCraft x128",
+                    "version": "17",
+                    "url": "https://dl.dropboxusercontent.com/u/10308589/launchcraft/1.7.2/resourcepacks/Sphax%20PureBDcraft%20128x%20MC17.zip"
+                },
+                "r3dcraft_shader_smooth_256": {
+                    "name": "R3D.CRAFT Smooth Shader x256",
+                    "version": "0.1.0",
+                    "url": "https://dl.dropboxusercontent.com/u/10308589/launchcraft/1.7.2/resourcepacks/%5B1.7%5D_R3D.CRAFT_N_MAPS_SR-256x_v0.1.0.zip"
+                },
+                "r3dcraft_shader_smooth_128": {
+                    "name": "R3D.CRAFT Smooth Shader x128",
+                    "version": "0.1.0",
+                    "url": "https://dl.dropboxusercontent.com/u/10308589/launchcraft/1.7.2/resourcepacks/%5B1.7%5D_R3D.CRAFT_N_MAPS_SR-128x_v0.1.0.zip"
+                },
+                "r3dcraft_shader_smooth_64": {
+                    "name": "R3D.CRAFT Smooth Shader x64",
+                    "version": "0.1.0",
+                    "url": "https://dl.dropboxusercontent.com/u/10308589/launchcraft/1.7.2/resourcepacks/%5B1.7%5D_R3D.CRAFT_N_MAPS_SR-64x_v0.1.0.zip"
+                },
+                "r3dcraft_default_256": {
+                    "name": "R3D.CRAFT Regular x256",
+                    "version": "0.1.5",
+                    "url": "https://dl.dropboxusercontent.com/u/10308589/launchcraft/1.7.2/resourcepacks/%5B1.7%5D_R3D.CRAFT_DR-256x_v0.1.5.zip"
+                },
+                "r3dcraft_default_128": {
+                    "name": "R3D.CRAFT Regular x128",
+                    "version": "0.1.5",
+                    "url": "https://dl.dropboxusercontent.com/u/10308589/launchcraft/1.7.2/resourcepacks/%5B1.7%5D_R3D.CRAFT_DR-128x_v0.1.5.zip"
+                },
+                "ocd": {
+                    "name": "OCD Texture Pack",
+                    "version": "1.7.2",
+                    "url": "https://dl.dropboxusercontent.com/u/10308589/launchcraft/1.7.2/resourcepacks/OCD%20pack%201.7.2.zip"
+                }
+            },
+            "shaderpacks": {
+                "seus_standard": {
+                    "name": "SEUS Standard",
+                    "version": "10.1",
+                    "url": "https://dl.dropboxusercontent.com/u/10308589/launchcraft/1.7.10/shaderpacks/SEUS-v10.1-Standard.zip"
+                },
+                "rudoplays": {
+                    "name": "RudoPlays",
+                    "version": "1.7.2",
+                    "url": "https://dl.dropboxusercontent.com/u/10308589/launchcraft/1.7.2/shaderpacks/RudoPlays%20Shader.zip"
+                },
+                "seus_preview": {
+                    "name": "SEUS Preview",
+                    "version": "10.2 Preview 1 Ultra",
+                    "url": "https://dl.dropboxusercontent.com/u/10308589/launchcraft/1.7.10/shaderpacks/SEUS-v10.2-Preview-1-Ultra.zip"
+                }
+            }
         }
     }
 }

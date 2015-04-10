@@ -33,12 +33,12 @@ if __name__ == '__main__':
         util.exit()
 
     print('This script will ask you yes or no questions.')
-    print('Any answers in square brackets (e.g. [1.7.2]), or that are capitalized (e.g. [Y/n]) are the default answers, and will be selected when you press enter.')
+    print('Any answers in square brackets (e.g. [1.7.10]), or that are capitalized (e.g. [Y/n]) are the default answers, and will be selected when you press enter.')
     util.print_separator()
 
-    version = raw_input('Which version of Minecraft would you like to use? [1.7.2]:').lower()
+    version = raw_input('Which version of Minecraft would you like to use? [1.7.10]: ').lower()
     if version == '':
-        version = '1.7.2'
+        version = '1.7.10'
 
     if version not in util.DATA['versions']:
         print("Invalid version selected.")
@@ -60,9 +60,9 @@ if __name__ == '__main__':
     util.print_separator()
 
     # Set the directory to which the custom profile will be installed.
-    profile_name = raw_input('What would you like to call the profile being created? [indiv0]: ').lower()
+    profile_name = raw_input('What would you like to call the profile being created? [launchcraft]: ').lower()
     if profile_name == '':
-        profile_name = 'indiv0'
+        profile_name = 'launchcraft'
     PROFILE_DIR = os.path.join(VERSIONS_DIR, profile_name)
     print('Creating profile {}'.format(profile_name))
 
