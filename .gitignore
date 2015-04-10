@@ -37,4 +37,3 @@ nosetests.xml
 
 /venv
 /env
-cacert.pem
