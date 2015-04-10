@@ -2,8 +2,8 @@ develop: setup-git
 	@echo "--> Installing dependencies"
 	pip install "setuptools>=0.9.8"
 	pip install -e .
-	pip install "file://`pwd`#egg=sentry[dev]"
-	pip install "file://`pwd`#egg=sentry[tests]"
+	pip install "file://`pwd`#egg=launchcraft[dev]"
+	pip install "file://`pwd`#egg=launchcraft[tests]"
 	@echo ""
 
 setup-git:
