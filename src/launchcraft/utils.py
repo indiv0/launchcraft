@@ -1,3 +1,12 @@
+"""
+launchcraft.utils
+~~~~~~~~~~~~~~~~~
+
+:copyright: (c) 2014-2015 by Nikita Pekin.
+:license: GPL-3.0, see LICENSE for more details.
+"""
+from __future__ import absolute_import
+
 import os
 import sys
 import shutil
@@ -16,10 +25,6 @@ def resource_path(relative):
 
 cert_path = resource_path('cacert.pem')
 
-# DATA = requests.get('https://raw.github.com/Indiv0/launchcraft/master/versions.json', verify=cert_path).json()
-with open('versions.json', 'r') as f:
-    import json
-    DATA = json.load(f)
 INSTALLED_MODS = []
 MODS = []
 
@@ -74,7 +79,7 @@ def query_yes_no(question, default="yes"):
             sys.stdout.write("Please respond with 'yes' or 'no' (or 'y' or 'n').\n")
 
 
-def printAskOptions(optionList):
+def print_ask_options(optionList):
     numberedMods = []
     for index, option in enumerate(x for x in optionList if x != 'forge'):
         print('{} - {}'.format(index + 1, optionList[option]['name']))
@@ -95,7 +100,7 @@ def printAskOptions(optionList):
     return (mods for mods in numberedMods if numberedMods.index(mods) + 1 in answer)
 
 
-def downloadFile(url, filename):
+def download_file(url, filename):
     r = requests.get(url, stream=True, verify=cert_path)
     with open(filename, 'wb') as f:
         total_length = int(r.headers.get('content-length'))
@@ -105,7 +110,7 @@ def downloadFile(url, filename):
                 f.flush()
 
 
-def installDep(key, jar, query=True):
+def install_dep(key, jar, query=True):
     # Forge is not installed via the normal dependency method.
     if key is 'forge':
         return
@@ -123,7 +128,7 @@ def installDep(key, jar, query=True):
     for dep in mod['deps']:
         if dep == 'forge':
             depends_on_forge = True
-        installDep(dep, jar, False)
+        install_dep(dep, jar, False)
 
         # If the requested mod depends on Forge and Forge is not installed, the installation fails.
         if dep not in INSTALLED_MODS:
@@ -131,12 +136,12 @@ def installDep(key, jar, query=True):
             exit()
 
     if depends_on_forge:
-        installForgeMod(key, jar)
+        install_forge_mod(key, jar)
     else:
-        installJar(key, jar)
+        install_jar(key, jar)
 
 
-def installJar(key, jar):
+def install_jar(key, jar):
     mod = MODS['mods'][key]
     name = mod['name']
 
@@ -149,7 +154,7 @@ def installJar(key, jar):
     os.chdir(tempDir)
 
     print('Downloading {} version {}'.format(name, mod['version']))
-    downloadFile(mod['url'], jarName)
+    download_file(mod['url'], jarName)
     print('Installing {} into the minecraft.jar'.format(name))
     with open(os.devnull, 'w') as devnull, RedirectStdStreams(stdout=devnull, stderr=devnull), zipfile.ZipFile(jarName, 'r') as zin, zipfile.ZipFile(jar, 'a') as zout:
         for n in zin.namelist():
@@ -161,7 +166,7 @@ def installJar(key, jar):
     INSTALLED_MODS.append(key)
 
 
-def installForgeMod(key, jar):
+def install_forge_mod(key, jar):
     mod = MODS['mods'][key]
     name = mod['name']
     version = mod['version']
@@ -172,14 +177,14 @@ def installForgeMod(key, jar):
     os.chdir(launchcraft.MOD_DIR)
 
     print('Downloading {} version {}'.format(name, version))
-    downloadFile(url, '{}-{}.{}'.format(key, version, url[-3:]))
+    download_file(url, '{}-{}.{}'.format(key, version, url[-3:]))
 
     os.chdir(current)
 
     INSTALLED_MODS.append(key)
 
 
-def installResourcePack(key):
+def install_resource_pack(key):
     mod = MODS['resourcepacks'][key]
     name = mod['name']
     version = mod['version']
@@ -190,12 +195,12 @@ def installResourcePack(key):
     os.chdir(launchcraft.RESOURCEPACK_DIR)
 
     print('Downloading {} version {}'.format(name, version))
-    downloadFile(url, '{}-{}.{}'.format(key, version, url[-3:]))
+    download_file(url, '{}-{}.{}'.format(key, version, url[-3:]))
 
     os.chdir(current)
 
 
-def installShaderPack(key):
+def install_shader_pack(key):
     mod = MODS['shaderpacks'][key]
     name = mod['name']
     version = mod['version']
@@ -206,12 +211,12 @@ def installShaderPack(key):
     os.chdir(launchcraft.SHADERPACK_DIR)
 
     print('Downloading {} version {}'.format(name, version))
-    downloadFile(url, '{}-{}.{}'.format(key, version, url[-3:]))
+    download_file(url, '{}-{}.{}'.format(key, version, url[-3:]))
 
     os.chdir(current)
 
 
-def removeMETAINF(jar):
+def remove_metainf(jar):
     print('Removing META-INF from {}'.format(jar))
 
     new_jar = jar + 'new'
