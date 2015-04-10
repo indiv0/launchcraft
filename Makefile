@@ -12,7 +12,7 @@ venv: venv/bin/activate
 
 venv/bin/activate:
 	# Setup venv/ if it doesn't exist.
-	test -d venv || virtualenv venv/ --python=$(PC)
+	test -d venv || virtualenv2 venv/ --python=$(PC)
 	. venv/bin/activate; pip install -Ur requirements
 	# Update file modification and access times.
 	touch venv/bin/activate
