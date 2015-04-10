@@ -1,0 +1,3 @@
+include setup.pu README.md MANIFEST.in LICENSE
+recursive-include src/launchcraft/data *
+global-exclude *~

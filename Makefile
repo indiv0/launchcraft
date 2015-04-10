@@ -1,30 +1,43 @@
-PC=python2.7
+develop: setup-git
+	@echo "--> Installing dependencies"
+	pip install "setuptools>=0.9.8"
+	pip install -e .
+	pip install "file://`pwd`#egg=sentry[dev]"
+	pip install "file://`pwd`#egg=sentry[tests]"
+	@echo ""
 
-all: build
-
-build: venv
-	. venv/bin/activate; pyinstaller launchcraft.spec
-
-run: venv
-	. venv/bin/activate; $(PC) launchcraft.py
-
-venv: venv/bin/activate
-
-venv/bin/activate:
-	# Setup venv/ if it doesn't exist.
-	test -d venv || virtualenv2 venv/ --python=$(PC)
-	. venv/bin/activate; pip install -Ur requirements
-	# Update file modification and access times.
-	touch venv/bin/activate
-	cp venv/lib/python2.7/site-packages/certifi/cacert.pem cacert.pem
-
-fullclean: clean
-	rm -rf venv/
-	rm -rf cacert.pem
+setup-git:
+	@echo "--> Installing git hooks"
+	git config branch.autosetuprebase always
+	cd .git/hooks && ln -sf ../../hooks/* ./
+	@echo ""
 
 clean:
-	rm -rf logs/
-	rm -rf build/
-	rm -rf dist/
-	rm -rf *.pyc
-	rm -rf *.zip
+	@echo "--> Cleaning pyc files"
+	find . -name "*.pyc" -delete
+	@echo "--> Cleaning directories"
+	rm -rf logs/ build/ dist/
+	@echo ""
+
+test: develop lint test-python
+
+test-python:
+	@echo "--> Running Python tests"
+	py.test tests || exit 1
+	@echo ""
+
+lint: lint-python
+
+lint-python:
+	@echo "--> Linting Python files"
+	PYFLAKES_NODOCTEST=1 flake8 src/launchcraft tests
+	@echo ""
+
+coverage: develop
+	coverage run --source=src/launchcraft -m py.test
+	coverage html
+
+publish:
+	python setup.py sdist bdist_wheel upload
+
+.PHONY: develop clean test test-python lint lint-python coverage publish
