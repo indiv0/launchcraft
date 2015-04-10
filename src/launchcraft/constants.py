@@ -7,6 +7,7 @@ launchcraft.constants
 """
 from __future__ import absolute_import
 
+import pkg_resources
 import os
 import sys
 
@@ -17,6 +18,9 @@ elif sys.platform == 'darwin':
     MINECRAFT_DIR = os.path.join(os.path.expanduser("~"), 'Library', 'Application Support', 'minecraft')
 else:
     MINECRAFT_DIR = os.path.join(os.path.expanduser("~"), '.minecraft')
+
+# Fix certifi dependency.
+CERT_PATH = pkg_resources.resource_filename('launchcraft', 'data/cacert.pem')
 
 BASE_DIR = os.getcwd()
 VERSIONS_DIR = os.path.join(MINECRAFT_DIR, 'versions')

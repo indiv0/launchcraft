@@ -17,7 +17,11 @@ import sys
 from launchcraft import get_version
 from launchcraft.constants import BASE_DIR, MINECRAFT_DIR, MOD_DIR, RESOURCEPACK_DIR, SHADERPACK_DIR, VERSIONS_DIR
 from launchcraft.mod_data import get_mod_data
-from launchcraft.utils import download_file, exit, install_dep, install_resource_pack, install_shader_pack, print_ask_options, print_separator, query_yes_no, remove_metainf, INSTALLED_MODS
+from launchcraft.utils import download_file, exit, install_dep, install_resource_pack, install_shader_pack, print_ask_options, print_separator, query_yes_no, remove_metainf
+
+
+INSTALLED_MODS = []
+MODS = []
 
 
 def main(args=None):
@@ -184,7 +188,7 @@ def main(args=None):
                 print('')
                 continue
 
-            install_dep(mod, JAR_FILE)
+            install_dep(MODS, INSTALLED_MODS, mod, JAR_FILE)
             print('')
 
     remove_metainf(JAR_FILE)
@@ -200,7 +204,7 @@ def main(args=None):
         for pack in toInstall:
             packData = MODS['resourcepacks'][pack]
 
-            install_resource_pack(pack)
+            install_resource_pack(MODS, pack)
             print('')
     print_separator()
 
@@ -214,7 +218,7 @@ def main(args=None):
         for pack in toInstall:
             packData = MODS['shaderpacks'][pack]
 
-            install_shader_pack(pack)
+            install_shader_pack(MODS, pack)
             print('')
     print_separator()
 

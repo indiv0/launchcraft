@@ -9,7 +9,9 @@ from __future__ import absolute_import
 
 import requests
 
-DATA = requests.get('https://raw.github.com/Indiv0/launchcraft/master/versions.json').json()
+from launchcraft.constants import CERT_PATH
+
+DATA = requests.get('https://raw.github.com/Indiv0/launchcraft/master/versions.json', verify=CERT_PATH).json()
 
 # import pkg_resources
 # with pkg_resources.resource_stream('launchcraft', 'data/versions.json') as f:

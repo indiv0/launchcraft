@@ -7,26 +7,14 @@ launchcraft.utils
 """
 from __future__ import absolute_import
 
-import os
-import sys
-import shutil
-
-import zipfile
-import requests
 from clint.textui import progress
+import os
+import requests
+import shutil
+import sys
+import zipfile
 
-import launchcraft
-
-
-# Fix certifi dependency.
-# Stolen and adpated from <http://stackoverflow.com/questions/7674790/bundling-data-files-with-pyinstaller-onefile>
-def resource_path(relative):
-    return os.path.join(getattr(sys, '_MEIPASS', os.path.abspath(".")), relative)
-
-cert_path = resource_path('cacert.pem')
-
-INSTALLED_MODS = []
-MODS = []
+from launchcraft.constants import CERT_PATH, MOD_DIR, RESOURCEPACK_DIR, SHADERPACK_DIR
 
 
 class RedirectStdStreams(object):
@@ -101,7 +89,7 @@ def print_ask_options(optionList):
 
 
 def download_file(url, filename):
-    r = requests.get(url, stream=True, verify=cert_path)
+    r = requests.get(url, stream=True, verify=CERT_PATH)
     with open(filename, 'wb') as f:
         total_length = int(r.headers.get('content-length'))
         for chunk in progress.bar(r.iter_content(chunk_size=1024), expected_size=(total_length / 1024) + 1):
@@ -110,16 +98,16 @@ def download_file(url, filename):
                 f.flush()
 
 
-def install_dep(key, jar, query=True):
+def install_dep(mods, installed_mods, key, jar, query=True):
     # Forge is not installed via the normal dependency method.
     if key is 'forge':
         return
 
     # If the mod is already installed, no need to install it again.
-    if key in INSTALLED_MODS:
+    if key in installed_mods:
         return
 
-    mod = MODS['mods'][key]
+    mod = mods['mods'][key]
     name = mod['name']
 
     depends_on_forge = False
@@ -128,21 +116,21 @@ def install_dep(key, jar, query=True):
     for dep in mod['deps']:
         if dep == 'forge':
             depends_on_forge = True
-        install_dep(dep, jar, False)
+        install_dep(mods, installed_mods, dep, jar, False)
 
         # If the requested mod depends on Forge and Forge is not installed, the installation fails.
-        if dep not in INSTALLED_MODS:
+        if dep not in installed_mods:
             print('Unable to install required dependency "{}"'.format(dep))
             exit()
 
     if depends_on_forge:
-        install_forge_mod(key, jar)
+        install_forge_mod(mods, installed_mods, key, jar)
     else:
-        install_jar(key, jar)
+        install_jar(mods, installed_mods, key, jar)
 
 
-def install_jar(key, jar):
-    mod = MODS['mods'][key]
+def install_jar(mods, installed_mods, key, jar):
+    mod = mods['mods'][key]
     name = mod['name']
 
     tempDir = 'jar_temp'
@@ -163,36 +151,36 @@ def install_jar(key, jar):
     os.chdir('..')
     shutil.rmtree(tempDir)
 
-    INSTALLED_MODS.append(key)
+    installed_mods.append(key)
 
 
-def install_forge_mod(key, jar):
-    mod = MODS['mods'][key]
+def install_forge_mod(mods, installed_mods, key, jar):
+    mod = mods['mods'][key]
     name = mod['name']
     version = mod['version']
     url = mod['url']
 
     current = os.getcwd()
 
-    os.chdir(launchcraft.MOD_DIR)
+    os.chdir(MOD_DIR)
 
     print('Downloading {} version {}'.format(name, version))
     download_file(url, '{}-{}.{}'.format(key, version, url[-3:]))
 
     os.chdir(current)
 
-    INSTALLED_MODS.append(key)
+    installed_mods.append(key)
 
 
-def install_resource_pack(key):
-    mod = MODS['resourcepacks'][key]
+def install_resource_pack(mods, key):
+    mod = mods['resourcepacks'][key]
     name = mod['name']
     version = mod['version']
     url = mod['url']
 
     current = os.getcwd()
 
-    os.chdir(launchcraft.RESOURCEPACK_DIR)
+    os.chdir(RESOURCEPACK_DIR)
 
     print('Downloading {} version {}'.format(name, version))
     download_file(url, '{}-{}.{}'.format(key, version, url[-3:]))
@@ -200,15 +188,15 @@ def install_resource_pack(key):
     os.chdir(current)
 
 
-def install_shader_pack(key):
-    mod = MODS['shaderpacks'][key]
+def install_shader_pack(mods, key):
+    mod = mods['shaderpacks'][key]
     name = mod['name']
     version = mod['version']
     url = mod['url']
 
     current = os.getcwd()
 
-    os.chdir(launchcraft.SHADERPACK_DIR)
+    os.chdir(SHADERPACK_DIR)
 
     print('Downloading {} version {}'.format(name, version))
     download_file(url, '{}-{}.{}'.format(key, version, url[-3:]))
