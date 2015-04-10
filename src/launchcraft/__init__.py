@@ -1,5 +1,10 @@
-#!/usr/bin/env python
+"""
+launchcraft
+~~~~~~~~~~~
 
+:copyright: (c) 2014-2015 by Nikita Pekin.
+:license: GPL-3.0, see LICENSE for more details.
+"""
 import os
 import sys
 import errno
@@ -10,8 +15,15 @@ import json
 
 import util
 
-VERSION = '1.0.5'
+try:
+    VERSION = __import__('pkg_resources') \
+        .get_distribution('launchcraft').version
+except Exception as e:
+    VERSION = 'unknown'
 
+
+def get_version():
+    return VERSION
 
 # The home directory will be different on Linux and Windows.
 if sys.platform == 'win32' or sys.platform == 'cygwin':
@@ -27,7 +39,8 @@ MOD_DIR = os.path.join(MINECRAFT_DIR, 'mods')
 RESOURCEPACK_DIR = os.path.join(MINECRAFT_DIR, 'resourcepacks')
 SHADERPACK_DIR = os.path.join(MINECRAFT_DIR, 'shaderpacks')
 
-if __name__ == '__main__':
+
+def main():
     if util.DATA['version'] != VERSION:
         print('Your version of Launchcraft ({}) does not match the minimum version of Launchcraft ({}). Please update.'.format(VERSION, util.DATA['version']))
         util.exit()
@@ -232,3 +245,6 @@ if __name__ == '__main__':
         input('Press any key to exit...')
     except:
         pass
+
+if __name__ == '__main__':
+    main()

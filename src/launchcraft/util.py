@@ -16,7 +16,10 @@ def resource_path(relative):
 
 cert_path = resource_path('cacert.pem')
 
-DATA = requests.get('https://raw.github.com/Indiv0/launchcraft/master/versions.json', verify=cert_path).json()
+# DATA = requests.get('https://raw.github.com/Indiv0/launchcraft/master/versions.json', verify=cert_path).json()
+with open('versions.json', 'r') as f:
+    import json
+    DATA = json.load(f)
 INSTALLED_MODS = []
 MODS = []
 
@@ -70,6 +73,7 @@ def query_yes_no(question, default="yes"):
         else:
             sys.stdout.write("Please respond with 'yes' or 'no' (or 'y' or 'n').\n")
 
+
 def printAskOptions(optionList):
     numberedMods = []
     for index, option in enumerate(x for x in optionList if x != 'forge'):
@@ -89,6 +93,7 @@ def printAskOptions(optionList):
         else:
             answer = ''
     return (mods for mods in numberedMods if numberedMods.index(mods) + 1 in answer)
+
 
 def downloadFile(url, filename):
     r = requests.get(url, stream=True, verify=cert_path)
@@ -179,7 +184,6 @@ def installResourcePack(key):
     name = mod['name']
     version = mod['version']
     url = mod['url']
-
 
     current = os.getcwd()
 
